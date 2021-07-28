@@ -1,0 +1,10 @@
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+# Directory folder structure #
+##############################
+**/bootstrap-5.0.2-examples 
+**/css
+**/js
