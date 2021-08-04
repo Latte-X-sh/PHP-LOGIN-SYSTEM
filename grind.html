@@ -1,27 +1,7 @@
-<?php
-// Initialize the session
-session_start();
-// var_dump($_SESSION);die();
- 
-// Check if the user is logged in, if not then redirect him to login page
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: signin.php");
-    exit;
-}
-?>
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
+  <style>
     body {font-family: Arial, Helvetica, sans-serif;}
     
     .navbar {
@@ -53,9 +33,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       }
     }
     </style>
+  <title>landing page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="navbar">
+  <div class="navbar">
     <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
     <form class="form-inline" action="/action_page.php">
       <input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -283,11 +270,5 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 </div>
 
-    <h1 class="my-5">Hi, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>. Welcome to the Welcome page.</h1>
-    <p>
-    <a href="Account-settings.php" class="btn btn-primary">View your profile</a>
-        <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
-        <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
-    </p>
 </body>
 </html>

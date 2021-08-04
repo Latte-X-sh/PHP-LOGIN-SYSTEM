@@ -73,7 +73,7 @@ function login_db($emil,$pwd){
                 $login_err="Invalid email or password.";
             }
     }else{
-        echo "Oops!error in the database";//if the statement return a number not 1(true) then display this error message.
+        $login_err="Invalid email or password";//if the statement return a number not 1(true) then display this error message.
     }
     // Close statement
     unset($stmt);

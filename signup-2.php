@@ -1,35 +1,36 @@
 <?php
-//initialize the session
-session_start();
-//checked if the user is already logged in and if so redirect
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-  header('location:index.php');
-  exit;
-}
-//we want to read from our db and verify if the data we receive is true. 
-require 'lib/functions.php';
-$date =getdate(); //footer date -will be moved to the footer section.
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-  if(isset($_POST['emailinput'])){ //if those particular arrays exist then assign the appropriate variables their values.
-    $email = $_POST['emailinput'];
-  }else{
-    $email = '';
-  }
-  if(isset($_POST['passwordinput'])){
-    $password = $_POST['passwordinput'];
-  }else{
-    $password = '';
-  }
-  login_db($email,$password);
-  // var_dump($password , $email);die();
-}
-// if(isset($_POST['']))
+require 'lib/functions.php'; //COPY AND PASTE CONTENT OF THAT PAGE HERE!
 
-// var_dump($date);die();
-
+if($_SERVER['REQUEST_METHOD'] =='POST'){ //CLIENT AND SERVER CONNECTION
+ 
+if(isset($_POST['name'])){
+  $name=$_POST['name'];//if it has data then attached the value to the variable
+}else {
+  $name= ''; //else make the variable blank
+}
+if(isset($_POST['email'])){
+  $email= $_POST['email'];
+}else {
+  $email='';
+}
+if(isset($_POST['Password'])){
+  $password= $_POST['Password'];
+}else {
+  $password= '';
+}
+if(isset($_POST['ConfirmPassword'])){
+  $confpassword= $_POST['ConfirmPassword'];
+}else {
+  $confpassword= '';
+}
+//  var_dump($_POST);die();
+// var_dump($name,$email,$password, $confpassword);die();
+$users=save_to_db($name,$email,$password); //call a function called save_to_db then attach the 3 variables
+header('location:signin.php'); //redirects the user to the sign in page.
+unset($pdo);//closes the connection
+}
 
 ?>
-
 
 
 <!doctype html>
@@ -196,68 +197,75 @@ input[type=submit]:hover {
 <div class ="container pt-5" >
   <div class ="row">
     <div class ="my-banner">
-  <h2>Login here please</h2>
+  <h2>Register here!</h2>
 </div>
     <div class="col-xs-1" align="center">
 
-
+<div class="container">
 <div class="container-my">
-  <form method="POST" action="signin.php">
+  <form method="POST" action="signup-2.php">
     <div class="row-my">
-      <h2 style="text-align:center">Login</h2>
-      <div class="vl">
+      <h2 style="text-align:center">Enter your Details</h2>
+      <!-- <div class="vl">
         <span class="vl-innertext">or</span>
-      </div>
-
-      <div class="col">
-        <a href="#" class="fb btn">
-          <i class="fa fa-facebook fa-fw"></i> Login with Facebook
-         </a>
-        <a href="#" class="twitter btn">
-          <i class="fa fa-twitter fa-fw"></i> Login with Twitter
-        </a>
-        <a href="#" class="google btn"><i class="fa fa-google fa-fw">
-          </i> Login with Google+
-        </a>
-      </div>
-
-      <div class="col">
-        <div class="hide-md-lg">
-          <p>Or sign in manually:</p>
+      </div> -->
+      <div class ="container">
+      <div class ="row">
+        <div class="mx-auto mt-2 col-xl-6 col-xs-6">
+          <label for="floatingInput ">Name</label>      
+          <input type="text"  placeholder="John Smith" id="nme" name='name' required><br><br>
+          <label for="floatingInput">Email</label> 
+          <input type="email" class="form-control"  id='emailinput' name="email" placeholder="johnsmith@email.com" required>
         </div>
-        <input type="email" class="form-control" name='emailinput' id="myInput" placeholder="name@example.com" required>
-        <input type="password"  placeholder="Password" id="pwd" name='passwordinput' required><br><br>
-        
-
+        <div class =" mx-auto mt-2 col-xl-6 col-xs-6 " >
+        <label for="floatingPassword">Password</label>      
+        <input type="password"  placeholder="Password" id="pwd" name='Password' required><br><br>
+        <label for="floatingPassword">Confirm Password</label> 
+        <input type="password" class="form-control" name="ConfirmPassword" id='confirmpassword' placeholder="Confirm Password" required>
+        </div>
+   
+    </div>
+  </div>
+  <div class ="row">
+      <div class=" mx-auto col-xl-10 col-sm-7">
+        <div class="hide-md-lg">
+          <p>Or sign up manually:</p>
+        </div>
+      
 <script>
-function myFunction() {
-  var x = document.getElementById("myInput");
-  if (x.type === "passwordinput") {
-    x.type = "text";
-  } else {
-    x.type = "passwordinput";
-  }
-}
+// function myFunction() {
+//   var x = document.getElementById("myInput");
+//   if (x.type === "passwordinput") {
+//     x.type = "text";
+//   } else {
+//     x.type = "passwordinput";
+//   }
+// }
 </script>
 
-        <input type="submit" value="Login">
+        <input type="submit" value="Register">
       </div>
-      
+      <!-- reset button -->
+      <div class =" mx-auto col-xl-1 col-sm-3">
+        <button class="w-20 btn btn-lg btn-danger" type="reset" value="Reset">Reset</button>
+      </div> 
+    </div>     
     </div>
   </form>
+</div>
 </div>
 
 <div class="bottom-container">
   <div class="row-my">
     <div class="col">
-      <a href="signup-2.php" style="color:white" class="btn">Sign up</a>
+      <a href="signin.php" style="color:white" class="btn">Already have an account?Sign in</a>
     </div>
     <div class="col">
       <a href="#" style="color:white" class="btn">Forgot password?</a>
     </div>
   </div>
 </div>
-<p class="mt-5 mb-3 text-muted"><?php /*echo $date['month']; echo ' ' ;*/ echo $date['year']; echo " "; ?>&copy; The Indigo Group. All Rights reserved</p>
+<p class="mt-5 mb-3 text-muted"><?php $date = date('Y'); echo $date; echo " "; ?>&copy; The Indigo Group. All Rights reserved</p>
 </div>
 </div>
 </div>
