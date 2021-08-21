@@ -1,13 +1,119 @@
 ﻿<?php
 // Initialize the session
 session_start();
+require 'lib/functions.php';
+$user_id = $_SESSION['id']; 
+$user_email = $_SESSION['email'];
 // var_dump($_SESSION);die();
- 
+// echo $user_email ; die();
+$profile_data = fetch_user_data($user_id);//Fetches db data
+// var_dump($_SESSION);die();
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+	if(isset($_POST['password_update'])){ 
+		if(isset($_POST['old_password'])){
+			$old_password = $_POST['old_password'];
+		}else{
+			$old_password = "";
+		}
+		if(isset($_POST['new_password'])){
+			$newpassword  = $_POST['new_password'];
+		}else{
+			$newpassword = "";
+		}
+		// var_dump($_POST);die();	
+		update_password($newpassword,$user_email,$old_password);
+		
+
+
+
+	}if(isset($_POST['Update'])){
+		// var_dump($_POST);die();
+	$update_array=array(
+		'username'=>'',
+		'firstname'=>'',
+		'lastname'=>'',
+		'birthdate'=>'',
+		'email'=>'',
+		'country'=>'',
+		'city'=>'',
+		'phoneno'=>'',	
+	);
+		if(isset($_POST['username'])){
+			$username = $_POST['username'];
+			$update_array['username']= $username;
+		}else{
+			$username = "";
+		}
+		//
+		if(isset($_POST['firstname'])){
+			$firstname = $_POST['firstname'];
+			$update_array['firstname']=$firstname;
+		}else{
+			$firstname = "";
+		}
+		//
+		if(isset($_POST['lastname'])){
+			$lastname = $_POST['lastname'];
+			$update_array['lastname']=$lastname;
+		}else{
+			$lastname = "";
+		}
+		//
+		if(isset($_POST['birthdate'])){
+			$birthdate = $_POST['birthdate'];
+			$update_array['birthdate']=$birthdate;
+		}else{
+			$birthdate = "";
+		}
+		//
+		if(isset($_POST['email'])){
+			$email = $_POST['email'];
+			$update_array['email']=$email;
+		}else{
+			$email = "";
+		}
+		//
+		if(isset($_POST['country'])){
+			$country = $_POST['country'];
+			$update_array['country']=$country;
+		}else{
+			$country = "";
+		}
+		//
+		if(isset($_POST['city'])){
+			$city = $_POST['city'];
+			$update_array['city']=$city;
+		}else{
+			$city = "";
+		}
+		//
+		if(isset($_POST['phoneno'])){
+			$phoneno = $_POST['phoneno'];
+			$update_array['phoneno']=$phoneno;
+		}else{
+			$phoneno = "";
+		}
+// $limit=sizeof($update_array); //size of the array == array length
+//  print_r( $update_array);die();
+update_db_data($update_array,$user_id);
+header("Refresh:0");
+	
+
+	}
+}
+
 //Check if the user is logged in, if not then redirect him to login page
  if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: signin.php");
+    header("location: signin.php?error=Novalidsessionrecognised");
     exit;
 } 
+
+
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -80,11 +186,12 @@ session_start();
 <div class="col-md-5">
 <div class="profile-info-left">
 <!-- from the Database -->
-<h3 class="user-name m-t-0 mb-0"><?php echo htmlspecialchars($_SESSION["name"]); ?></h3>
-<h6 class="text-muted">UI/UX Design Team</h6>
-<small class="text-muted">Web Designer</small>
+<br>
+<h4 class="user-name "><div class="title">Username:<?php echo " ". htmlspecialchars($profile_data["name"]); ?></div></h4>
+<h4 class="user-name "><div class="title">Firstname:<?php echo " ". htmlspecialchars($profile_data["First_name"]); ?></div></h4>
+<h4 class="user-name "><div class="title">Lastname:<?php echo " ". htmlspecialchars($profile_data["Last_name"]); ?></div></h4>
 <div class="staff-id">Employee ID : FT-0001</div>
-<div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+<div class="small doj text-muted">Date of Joining :<?php echo " ". htmlspecialchars($profile_data["date-created"]);?></div>
 <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
 </div>
 </div>
@@ -92,36 +199,27 @@ session_start();
 <ul class="personal-info">
 <li>
 <div class="title">Phone:</div>
-<div class="text"><a href="">9876543210</a></div>
+<div class="text"><?php echo "+254".htmlspecialchars($profile_data["Phone_number"]);?></div>
 </li>
 <li>
 <div class="title">Email:</div>
-<div class="text"><a href=""><span class="__cf_email__" data-cfemail="a1cbcec9cfc5cec4e1c4d9c0ccd1cdc48fc2cecc">[email&#160;protected]</span></a></div>
+<div class="text"><?php echo htmlspecialchars($profile_data["email"]);?></div>
 </li>
 <li>
 <div class="title">Birthday:</div>
-<div class="text">24th July</div>
+<div class="text"><?php echo htmlspecialchars($profile_data["date_of_birth"]);?></div>
 </li>
 <li>
-<div class="title">Address:</div>
-<div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
+<div class="title">Country:</div>
+<div class="text"><?php echo htmlspecialchars($profile_data["Country"]);?></div>
+</li>
+<li>
+<div class="title">City:</div>
+<div class="text" ><?php echo htmlspecialchars($profile_data["City"]);?></div>
 </li>
 <li>
 <div class="title">Gender:</div>
-<div class="text">Male</div>
-</li>
-<li>
-<div class="title">Reports to:</div>
-<div class="text">
-<div class="avatar-box">
-<div class="avatar avatar-xs">
-<img src="assets/img/profiles/avatar-16.jpg" alt="">
-</div>
-</div>
-<a href="profile.html">
-Jeffery Lalor
-</a>
-</div>
+<div class="text" ><?php echo htmlspecialchars($profile_data["Gender"]);?></div>
 </li>
 </ul>
 </div>
@@ -156,13 +254,6 @@ Jeffery Lalor
 <div class="card-body">
 <h3 class="card-title">Personal information</h3>
 <ul class="list-group notification-list">
-<li class="list-group-item">
-Enable 2FA Authentication
-<div class="status-toggle">
-<input type="checkbox" id="2fa_module" class="check">
-<label for="2fa_module" class="checktoggle">checkbox</label>
-</div>
-</li>
 <li class="list-group-item">
 Change your Password
 <a href="#" class="edit-icon" data-toggle="modal" data-target="#password_change_modal"><i class="fa fa-pencil"></i></a>
@@ -255,71 +346,6 @@ Enable 2FA Authentication
 <div class="text">From DB</div>
 </li>
 </ul>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-	<!-- the 1st column  -->
-<!-- <div class="col-md-6 d-flex">
-<div class="card profile-box flex-fill">
-<div class="card-body">
-<h3 class="card-title">Bank information</h3>
-<ul class="personal-info">
-<li>
-<div class="title">Bank name</div>
-<div class="text">ICICI Bank</div>
-</li>
-<li>
-<div class="title">Bank account No.</div>
-<div class="text">159843014641</div>
-</li>
-<li>
-<div class="title">IFSC Code</div>
-<div class="text">ICI24504</div>
-</li>
-<li>
-<div class="title">PAN No</div>
-<div class="text">TC000Y56</div>
-</li>
-</ul>
-</div>
-</div>
-</div> -->
-<div class="col-md-12 d-flex">
-<div class="card profile-box flex-fill">
-<div class="card-body">
-<h3 class="card-title">Family Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a></h3>
-<div class="table-responsive">
-<table class="table table-nowrap">
-<thead>
-<tr>
-<th>Name</th>
-<th>Relationship</th>
-<th>Date of Birth</th>
-<th>Phone</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Leo</td>
-<td>Brother</td>
-<td>Feb 16th, 2019</td>
-<td>9876543210</td>
-<td class="text-right">
-<div class="dropdown dropdown-action">
-<a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-<a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-</div>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 </div>
 </div>
 </div>
@@ -428,14 +454,14 @@ Enable 2FA Authentication
 </button>
 </div>
 <div class="modal-body">
-<form>
+<form action="Account-settings.php" method="POST" enctype="multipart/form-data">
 <div class="row">
 <div class="col-md-6">
 <div class="profile-img-wrap edit-img">
 <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">
 <div class="fileupload btn">
 <span class="btn-text">edit</span>
-<input class="upload" type="file">
+<input class="upload" type="file" name="userprofile">
 </div>
 </div>
 </div>
@@ -444,7 +470,7 @@ Enable 2FA Authentication
 	<br>
 	<br>
 <label>Username</label>
-<input type="text" class="form-control" value="Latte-x">
+<input type="text" class="form-control" name="username" placeholder="<?php echo htmlspecialchars($profile_data["name"]);?>">
 </div>
 </div>
 </div>
@@ -452,20 +478,20 @@ Enable 2FA Authentication
 <div class="col-md-6">
 <div class="form-group">
 <label>First Name</label>
-<input type="text" class="form-control" value="<?php echo htmlspecialchars($_SESSION["name"]); ?>">
+<input type="text" class="form-control" name="firstname" placeholder="<?php echo htmlspecialchars($profile_data["First_name"]); ?>">
 </div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
 <label>Last Name</label>
-<input type="text" class="form-control" value="Doe">
+<input type="text" class="form-control" name="lastname" placeholder="<?php echo htmlspecialchars($profile_data["Last_name"]);?>">
 </div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
 <label>Birth Date</label>
 <div class="cal-icon">
-<input class="form-control datetimepicker" type="text" value="05/06/1985">
+<input class="form-control datetimepicker" name="birthdate" type="text" placeholder="<?php echo htmlspecialchars($profile_data["date_of_birth"]);?>">
 </div>
 </div>
 </div>
@@ -473,7 +499,7 @@ Enable 2FA Authentication
 <div class="form-group">
 <label>Gender</label>
 <select class="select form-control">
-<option value="male selected">Male</option>
+<option value="male ">Male</option>
 <option value="female">Female</option>
 </select>
 </div>
@@ -484,7 +510,7 @@ Enable 2FA Authentication
 <div class="col-md-12">
 <div class="form-group">
 <label>Email</label>
-<input type="email" class="form-control" value="New York">
+<input type="email" class="form-control" name="email" placeholder="<?php echo htmlspecialchars($profile_data["email"]);?>">
 </div>
 </div>
 </div>
@@ -492,35 +518,24 @@ Enable 2FA Authentication
 <div class="col-md-6">
 <div class="form-group">
 <label>Country</label>
-<input type="text" class="form-control" value="New York">
+<input type="text" class="form-control" name="country" placeholder="<?php echo htmlspecialchars($profile_data["Country"]);?>">
 </div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
 <label>City</label>
-<input type="text" class="form-control" value="United States">
+<input type="text" class="form-control" name="city" placeholder="<?php echo htmlspecialchars($profile_data["City"]);?>">
 </div>
 </div>
 <div class="col-md-6">
 <div class="form-group">
 <label>Phone Number</label>
-<input type="text" class="form-control" value="631-889-3206">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-<label>Interests <span class="text-danger">*</span></label>
-<select class="select">
-<option>What's your interest</option>
-<option>Web Designer</option>
-<option>Web Developer</option>
-<option>Android Developer</option>
-</select>
+<input type="text" class="form-control" name="phoneno" placeholder="<?php echo htmlspecialchars($profile_data["Phone_number"]);?>">
 </div>
 </div>
 </div>
 <div class="submit-section">
-<button class="btn btn-primary submit-btn">Submit</button>
+<button class="btn btn-primary submit-btn" name="Update">Submit</button>
 </div>
 </form>
 </div>
@@ -539,12 +554,12 @@ Enable 2FA Authentication
 	</div>
 	<h5 class="mx-auto">Enter your old password and your current password.</h5>
 	<div class="modal-body">
-	<form>
+	<form class="Account-settings.php" method="POST">
 	<div class="row">
 	<div class="col-md-12">
 	<div class="form-group">
 	<label>Old Password</label>
-	<input type="text" class="form-control">
+	<input type="password" name="old_password" class="form-control">
 	</div>
 	</div>
 	</div>
@@ -552,64 +567,13 @@ Enable 2FA Authentication
 	<div class="col-md-12">
 	<div class="form-group">
 	<label>New Password</label>
-	<input type="text" class="form-control">
+	<input type="password" name="new_password" class="form-control">
 	</div>
 	</div>
 	</div>
-	<!-- <div class="col-md-6">
-	<div class="form-group">
-	<label>Passport Expiry Date</label>
-	<div class="cal-icon">
-	<input class="form-control datetimepicker" type="text">
-	</div>
-	</div>
-	</div> -->
-	<!-- <div class="col-md-6">
-	<div class="form-group">
-	<label>Tel</label>
-	<input class="form-control" type="text">
-	</div>
-	</div>
-	<div class="col-md-6">
-	<div class="form-group">
-	<label>Nationality <span class="text-danger">*</span></label>
-	<input class="form-control" type="text">
-	</div>
-	</div> -->
-	<!-- <div class="col-md-6">
-	<div class="form-group">
-	<label>Religion</label>
-	<div class="cal-icon">
-	<input class="form-control" type="text">
-	</div>
-	</div>
-	</div> -->
-	<!-- <div class="col-md-6">
-	<div class="form-group">
-	<label>Marital status <span class="text-danger">*</span></label>
-	<select class="select form-control">
-	<option>-</option>
-	<option>Single</option>
-	<option>Married</option>
-	</select>
-	</div>
-	</div> -->
-	<!-- <div class="col-md-6">
-	<div class="form-group">
-	<label>Employment of spouse</label>
-	<input class="form-control" type="text">
-	</div>
-	</div>
-	<div class="col-md-6">
-	<div class="form-group">
-	<label>No. of children </label>
-	<input class="form-control" type="text">
-	</div>
-	</div> -->
-
 	<div class="submit-section">
 	<button type="reset" class="btn btn-danger submit-btn" >Cancel</button>
-	<button class="btn btn-primary submit-btn">Submit</button>
+	<button class="btn btn-primary submit-btn" name="password_update">Submit</button>
 	</div>
 	</form>
 	</div>
@@ -683,94 +647,6 @@ Enable 2FA Authentication
 <div class="form-group">
 <label>No. of children </label>
 <input class="form-control" type="text">
-</div>
-</div>
-</div>
-<div class="submit-section">
-<button class="btn btn-primary submit-btn">Submit</button>
-</div>
-</form>
-</div>
-</div>
-</div>
-</div>
-
-
-<div id="family_info_modal" class="modal custom-modal fade" role="dialog">
-<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title"> Family Informations</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<form>
-<div class="form-scroll">
-<div class="card">
-<div class="card-body">
-<h3 class="card-title">Family Member <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-<div class="row">
-<div class="col-md-6">
-<div class="form-group">
-<label>Name <span class="text-danger">*</span></label>
-<input class="form-control" type="text">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-<label>Relationship <span class="text-danger">*</span></label>
-<input class="form-control" type="text">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-<label>Date of birth <span class="text-danger">*</span></label>
- <input class="form-control" type="text">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-<label>Phone <span class="text-danger">*</span></label>
-<input class="form-control" type="text">
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="card">
-<div class="card-body">
-<h3 class="card-title">Education Informations <a href="javascript:void(0);" class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-<div class="row">
-<div class="col-md-6">
-<div class="form-group">
-<label>Name <span class="text-danger">*</span></label>
-<input class="form-control" type="text">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-<label>Relationship <span class="text-danger">*</span></label>
-<input class="form-control" type="text">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-<label>Date of birth <span class="text-danger">*</span></label>
-<input class="form-control" type="text">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-<label>Phone <span class="text-danger">*</span></label>
-<input class="form-control" type="text">
-</div>
-</div>
-</div>
-<div class="add-more">
-<a href="javascript:void(0);"><i class="fa fa-plus-circle"></i> Add More</a>
-</div>
 </div>
 </div>
 </div>

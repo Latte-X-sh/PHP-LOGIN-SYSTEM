@@ -1,5 +1,5 @@
 
-<?php //more php code here coming.?>
+<?php //more php code here coming. ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
