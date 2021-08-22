@@ -29,6 +29,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 	}if(isset($_POST['Update'])){
+
+
 		
 		// print_r($_FILES['userprofileimage']);die();
 		// var_dump($_FILES);die();
@@ -74,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		}
 		//
 		if(isset($_POST['birthdate'])){
-			$birthdate = $_POST['birthdate'];
+            $birthdate =  date('Y-m-d',strtotime(strtr($_POST['birthdate'] , '/','-')));
 			$update_array['birthdate']=$birthdate;
 		}else{
 			$birthdate = "";
