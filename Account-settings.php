@@ -2,6 +2,7 @@
 // Initialize the session
 session_start();
 require 'lib/functions.php';
+require 'lib/imageprocessing.php';
 $user_id = $_SESSION['id']; 
 $user_email = $_SESSION['email'];
 // var_dump($_SESSION);die();
@@ -28,7 +29,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 	}if(isset($_POST['Update'])){
-		// var_dump($_POST);die();
+
+
+		
+		// print_r($_FILES['userprofileimage']);die();
+		// var_dump($_FILES);die();
 	$update_array=array(
 		'username'=>'',
 		'firstname'=>'',
@@ -39,6 +44,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		'city'=>'',
 		'phoneno'=>'',	
 	);
+		if(isset($_FILES['userprofileimage'])){
+			$userimage = $_FILES['userprofileimage'];
+			//image processing
+			account_image_processing($userimage);
+			// $update_array['userprofileimage']= $userimage;
+		}else{
+			//later
+			header("Location:Account-settings.php?error=Imageuploadfailed");
+		}
+		//
 		if(isset($_POST['username'])){
 			$username = $_POST['username'];
 			$update_array['username']= $username;
@@ -61,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		}
 		//
 		if(isset($_POST['birthdate'])){
-			$birthdate = $_POST['birthdate'];
+            $birthdate =  date('Y-m-d',strtotime(strtr($_POST['birthdate'] , '/','-')));
 			$update_array['birthdate']=$birthdate;
 		}else{
 			$birthdate = "";
@@ -93,6 +108,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$update_array['phoneno']=$phoneno;
 		}else{
 			$phoneno = "";
+		}
+		if(isset($_POST['gender'])){
+			$gender = $_POST['gender'];
+			$update_array['gender']=$gender;
+		}else{
+			$gender = "";
 		}
 // $limit=sizeof($update_array); //size of the array == array length
 //  print_r( $update_array);die();
@@ -186,10 +207,10 @@ header("Refresh:0");
 <div class="col-md-5">
 <div class="profile-info-left">
 <!-- from the Database -->
-<br>
-<h4 class="user-name "><div class="title">Username:<?php echo " ". htmlspecialchars($profile_data["name"]); ?></div></h4>
-<h4 class="user-name "><div class="title">Firstname:<?php echo " ". htmlspecialchars($profile_data["First_name"]); ?></div></h4>
-<h4 class="user-name "><div class="title">Lastname:<?php echo " ". htmlspecialchars($profile_data["Last_name"]); ?></div></h4>
+
+<h4 class="user-name "><div class="title">Username:<?php echo "&nbsp". htmlspecialchars($profile_data["name"]); ?></div></h4>
+<h5 class="user-name "><div class="title">Firstname:<?php echo "&nbsp"."&nbsp"."&nbsp"."&nbsp"."&nbsp". "&nbsp"."&nbsp". htmlspecialchars($profile_data["First_name"]); ?></div></h5>
+<h5 class="user-name "><div class="title">Lastname:<?php echo "&nbsp"."&nbsp"."&nbsp"."&nbsp"."&nbsp". "&nbsp"."&nbsp". htmlspecialchars($profile_data["Last_name"]); ?></div></h5>
 <div class="staff-id">Employee ID : FT-0001</div>
 <div class="small doj text-muted">Date of Joining :<?php echo " ". htmlspecialchars($profile_data["date-created"]);?></div>
 <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
@@ -461,7 +482,7 @@ Enable 2FA Authentication
 <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">
 <div class="fileupload btn">
 <span class="btn-text">edit</span>
-<input class="upload" type="file" name="userprofile">
+<input class="upload" type="file" name="userprofileimage">
 </div>
 </div>
 </div>
@@ -498,7 +519,7 @@ Enable 2FA Authentication
 <div class="col-md-6">
 <div class="form-group">
 <label>Gender</label>
-<select class="select form-control">
+<select name="gender" class="select form-control">
 <option value="male ">Male</option>
 <option value="female">Female</option>
 </select>
