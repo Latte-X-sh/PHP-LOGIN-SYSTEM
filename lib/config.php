@@ -7,7 +7,4 @@ return array(
 'database_user' =>'root',
 'database_password' => NULL
 );
-
-
-
 ?>

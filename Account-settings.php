@@ -114,9 +114,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $gender = "";
         }
 // $limit=sizeof($update_array); //size of the array == array length
-//  print_r( $update_array);die();
-        update_db_data($update_array, $user_id);
-        header("Refresh:0");
+//  print_r( $update_array['birthdate']);die();
+update_db_data($update_array,$user_id);
+header("Refresh:0");
+	
 
 
     }

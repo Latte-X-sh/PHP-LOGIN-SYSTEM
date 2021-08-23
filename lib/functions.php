@@ -121,7 +121,7 @@ function update_db_data($array_from_side, $iduser)
     $query4 = "UPDATE `users`  
                 SET date_of_birth = CASE 
                             WHEN :dbirth  is NULL THEN  users.date_of_birth
-                            WHEN :dbirth='' THEN users.date_of_birth  
+                            WHEN :dbirth='1970-01-01' THEN users.date_of_birth  
                             ELSE :dbirth 
                             END  
                 WHERE id = :id ";
