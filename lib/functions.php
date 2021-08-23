@@ -306,6 +306,64 @@ function sanitizeText($textString) {
 
 function handle_audio($mixTitle,$mixFile){
 
+    $message = "";
+
+    $fileTempPath = $mixFile['tmp_name'];
+    $fileName = $mixFile['name'];
+    $fileSize = $mixFile['size'];
+    $fileType = $mixFile['type'];
+
+    $fileNameCmps = explode(".", $fileName);
+
+    $fileExtension = strtolower(end($fileNameCmps));
+
+
+    $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+
+    $allowedFileExtensions = array('mp3');
+
+    if (in_array($fileExtension, $allowedFileExtensions)) {
+
+        $uploadFileDir = 'assets/uploaded_files/';
+        $dest_path = $uploadFileDir . $newFileName;
+
+        if(move_uploaded_file($fileTempPath, $dest_path))
+        {
+
+            $pdo = get_connection();
+            $query = "INSERT INTO `mixes`(`title`, `size`, `type`, `filename`) VALUES (?,?,?,?)";
+
+            $stmt = $pdo->prepare($query);
+
+            $stmt->execute([sanitizeText($mixTitle) , $fileSize ,$fileType ,$newFileName]);
+
+            $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($stmt->rowCount() == 1) {
+                $message ='File is successfully uploaded.';
+            }
+
+        }
+        else
+        {
+            $message = 'There was some error moving the file to upload directory.';
+        }
+
+    }else{
+
+        $message ='File Type Unsupported.';
+
+    }
+
+
+
+
+
+
+    header("Location:mix_upload.php?message=$message");
+
+
+
 
 
 }

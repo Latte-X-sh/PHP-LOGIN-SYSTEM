@@ -3,8 +3,9 @@
 session_start();
 require 'lib/functions.php';
 require 'lib/imageprocessing.php';
+
 $user_id = $_SESSION['id'];
-$user_email = $_SESSION['email'];
+//$user_email = $_SESSION['email'];
 // var_dump($_SESSION);die();
 // echo $user_email ; die();
 $profile_data = fetch_user_data($user_id);//Fetches db data
@@ -22,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-    if(isset($_POST['mix-file'])){
-        $mixFile = $_POST['mix-file'];
+    if(isset($_FILES['mix-file'])){
+        $mixFile = $_FILES['mix-file'];
     }
 
     handle_audio($mixTitle,$mixFile);
@@ -99,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
 
             <div class="form-group">
-                <label>Upload Files</label>
+                <label>Mix File</label>
                 <input class="form-control" name="mix-file" accept="audio/*" type="file">
             </div>
             <div class="submit-section">
