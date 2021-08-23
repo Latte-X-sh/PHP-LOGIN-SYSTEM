@@ -340,7 +340,7 @@ function handle_audio($mixTitle,$mixFile){
             $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($stmt->rowCount() == 1) {
-                $message ='File is successfully uploaded.';
+                $message = $fileName .' File is successfully uploaded.';
             }
 
         }
