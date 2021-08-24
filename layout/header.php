@@ -26,7 +26,9 @@
 </a>
 
 <div class="page-title-box">
-<h3>Account settings</h3>
+<h3><script>
+let title= document.title;
+document.write(title);</script></h3>
 </div>
 
 <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
@@ -264,7 +266,7 @@
 </a>
 <div class="dropdown-menu">
 <a class="dropdown-item" href="profile.html">My Profile</a>
-<a class="dropdown-item" href="settings.html">Settings</a>
+<a class="dropdown-item" href="Account-settings.php">Settings</a>
 <a class="dropdown-item" href="logout.php">Logout</a>
 </div>
 </li>
@@ -275,7 +277,7 @@
 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 <div class="dropdown-menu dropdown-menu-right">
 <a class="dropdown-item" href="profile.html">My Profile</a>
-<a class="dropdown-item" href="settings.html">Settings</a>
+<a class="dropdown-item" href="Account-settings.php">Settings</a>
 <a class="dropdown-item" href="login.html">Logout</a>
 </div>
 </div>
