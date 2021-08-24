@@ -1,11 +1,5 @@
 .idea
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-assets/uploaded_files/*
-=======
->>>>>>> Stashed changes
 *.mp3
-=======
 # Logs and databases #
 ######################
 *.log
@@ -15,4 +9,3 @@ assets/uploaded_files/*
 **/bootstrap-5.0.2-examples 
 **/css
 **/js
->>>>>>> a6dd505c4fea565069ae126572f3e27897f899ad

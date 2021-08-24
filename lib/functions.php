@@ -308,6 +308,7 @@ function handle_audio($mixTitle,$mixFile){
 
     $message = "";
 
+
     $fileTempPath = $mixFile['tmp_name'];
     $fileName = $mixFile['name'];
     $fileSize = $mixFile['size'];
@@ -318,7 +319,7 @@ function handle_audio($mixTitle,$mixFile){
     $fileExtension = strtolower(end($fileNameCmps));
 
 
-    $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+    $newFileName = md5(time() . $fileNameCmps[0]) . '.' . $fileExtension;
 
     $allowedFileExtensions = array('mp3');
 
@@ -326,6 +327,7 @@ function handle_audio($mixTitle,$mixFile){
 
         $uploadFileDir = 'assets/uploaded_files/';
         $dest_path = $uploadFileDir . $newFileName;
+
 
         if(move_uploaded_file($fileTempPath, $dest_path))
         {
