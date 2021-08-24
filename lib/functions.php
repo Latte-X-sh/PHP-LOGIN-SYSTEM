@@ -325,7 +325,7 @@ function handle_audio($mixTitle,$mixFile){
 
     if (in_array($fileExtension, $allowedFileExtensions)) {
 
-        $uploadFileDir = 'assets/uploaded_files/';
+        $uploadFileDir = 'storage/uploaded_files/';
         $dest_path = $uploadFileDir . $newFileName;
 
 

@@ -1,5 +1,8 @@
 .idea
 *.mp3
+*.png
+*.jpeg
+*.jpg
 # Logs and databases #
 ######################
 *.log

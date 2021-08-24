@@ -8,9 +8,9 @@ $imageTempname= $imageData['tmp_name'];
 $imageError=    $imageData['error'];
 $imageSize= $imageData['size'];
 $imageFiledata = explode('/',$imageType);
-<<<<<<< HEAD
+
 //print_r(date().$imageData['name']) ;die();
-=======
+
 // print_r($imagefiledata);die();
 $imageFileextension = $imageFiledata[1];
 if($imageFileextension == "jpeg" || $imageFileextension == "jpg" || $imageFileextension == "png"  ){
