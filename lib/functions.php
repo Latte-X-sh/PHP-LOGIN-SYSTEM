@@ -313,9 +313,10 @@ function handle_audio($mixTitle,$mixFile){
     $fileName = $mixFile['name'];
     $fileSize = $mixFile['size'];
     $fileType = $mixFile['type'];
+   
 
     $fileNameCmps = explode(".", $fileName);
-
+    // print_r($fileNameCmps);die();
     $fileExtension = strtolower(end($fileNameCmps));
 
 
@@ -325,7 +326,11 @@ function handle_audio($mixTitle,$mixFile){
 
     if (in_array($fileExtension, $allowedFileExtensions)) {
 
+<<<<<<< Updated upstream
         $uploadFileDir = 'storage/uploaded_files/';
+=======
+        $uploadFileDir = 'storage/uploaded_mixes/';
+>>>>>>> Stashed changes
         $dest_path = $uploadFileDir . $newFileName;
 
 
