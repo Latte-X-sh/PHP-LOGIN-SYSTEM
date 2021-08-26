@@ -326,11 +326,7 @@ function handle_audio($mixTitle,$mixFile){
 
     if (in_array($fileExtension, $allowedFileExtensions)) {
 
-<<<<<<< Updated upstream
-        $uploadFileDir = 'storage/uploaded_files/';
-=======
         $uploadFileDir = 'storage/uploaded_mixes/';
->>>>>>> Stashed changes
         $dest_path = $uploadFileDir . $newFileName;
 
 
