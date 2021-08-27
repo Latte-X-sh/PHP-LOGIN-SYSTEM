@@ -2,26 +2,26 @@
 //initialize the session
 session_start();
 //checked if the user is already logged in and if so redirect
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-  header('location:index.php');
-  exit;
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    header('location:index.php');
+    exit;
 }
 //we want to read from our db and verify if the data we receive is true. 
 require 'lib/functions.php';
-$date =getdate(); //footer date -will be moved to the footer section.
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-  if(isset($_POST['emailinput'])){ //if those particular arrays exist then assign the appropriate variables their values.
-    $email = $_POST['emailinput'];
-  }else{
-    $email = '';
-  }
-  if(isset($_POST['passwordinput'])){
-    $password = $_POST['passwordinput'];
-  }else{
-    $password = '';
-  }
-  login_db($email,$password);
-  // var_dump($password , $email);die();
+$date = getdate(); //footer date -will be moved to the footer section.
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['emailinput'])) { //if those particular arrays exist then assign the appropriate variables their values.
+        $email = $_POST['emailinput'];
+    } else {
+        $email = '';
+    }
+    if (isset($_POST['passwordinput'])) {
+        $password = $_POST['passwordinput'];
+    } else {
+        $password = '';
+    }
+    login_db($email, $password);
+    // var_dump($password , $email);die();
 }
 // if(isset($_POST['']))
 
@@ -31,235 +31,94 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 ?>
 
 
-
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Moses Odalo">
     <meta name="generator" content="Hugo 0.84.0">
     <title>Signin Page</title>
- <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
     <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/"> -->
     <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-   body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-* {
-  box-sizing: border-box;
-}
-.my-banner{
-  font-family: 'Aclonica';font-size: 22px;
-}
-
-/* style the container */
-.container-my {
-  position: relative;
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px 0 30px 0;
-} 
-
-/* style inputs and link buttons */
-input,
-.btn {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  margin: 5px 0;
-  opacity: 0.85;
-  display: inline-block;
-  font-size: 17px;
-  line-height: 20px;
-  text-decoration: none; /* remove underline from anchors */
-}
-
-input:hover,
-.btn:hover {
-  opacity: 1;
-}
-
-/* add appropriate colors to fb, twitter and google buttons */
-.fb {
-  background-color: #3B5998;
-  color: white;
-}
-
-.twitter {
-  background-color: #55ACEE;
-  color: white;
-}
-
-.google {
-  background-color: #dd4b39;
-  color: white;
-}
-
-/* style the submit button */
-input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
-}
-
-/* Two-column layout */
-.col {
-  float: left;
-  width: 50%;
-  margin: auto;
-  padding: 0 50px;
-  margin-top: 6px;
-}
-
-/* Clear floats after the columns */
-.row-my:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* vertical line */
-.vl {
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  border: 2px solid #ddd;
-  height: 175px;
-}
-
-/* text inside the vertical line */
-.vl-innertext {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  padding: 8px 10px;
-}
-
-/* hide some text on medium and large screens */
-.hide-md-lg {
-  display: none;
-}
-
-/* bottom container */
-.bottom-container {
-  text-align: center;
-  background-color: #666;
-  border-radius: 0px 0px 4px 4px;
-}
-
-/* Responsive layout - when the screen is less than 650px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 650px) {
-  .col {
-    width: 100%;
-    margin-top: 0;
-  }
-  /* hide the vertical line */
-  .vl {
-    display: none;
-  }
-  /* show the hidden text on small screens */
-  .hide-md-lg {
-    display: block;
-    text-align: center;
-  }
-}
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <!-- <link href="signin.css" rel="stylesheet"> -->
-  </head>
-  <body>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-<div class ="container pt-5" >
-  <div class ="row">
-    <div class ="my-banner">
-  <h2>Login here please</h2>
-</div>
-    <div class="col-xs-1" align="center">
+    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/custom/signin.css" rel="stylesheet">
 
 
-<div class="container-my">
-  <form method="POST" action="signin.php">
-    <div class="row-my">
-      <h2 style="text-align:center">Login</h2>
-      <div class="vl">
-        <span class="vl-innertext">or</span>
-      </div>
-
-      <div class="col">
-        <a href="#" class="fb btn">
-          <i class="fa fa-facebook fa-fw"></i> Login with Facebook
-         </a>
-        <a href="#" class="twitter btn">
-          <i class="fa fa-twitter fa-fw"></i> Login with Twitter
-        </a>
-        <a href="#" class="google btn"><i class="fa fa-google fa-fw">
-          </i> Login with Google+
-        </a>
-      </div>
-
-      <div class="col">
-        <div class="hide-md-lg">
-          <p>Or sign in manually:</p>
+</head>
+<body>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container pt-5">
+    <div class="row">
+        <div class="my-banner">
+            <h2>Login here please</h2>
         </div>
-        <input type="email" class="form-control" name='emailinput' id="myInput" placeholder="name@example.com" required>
-        <input type="password"  placeholder="Password" id="pwd" name='passwordinput' required><br><br>
-        
+        <div class="col-xs-1" align="center">
 
-<script>
-function myFunction() {
-  var x = document.getElementById("myInput");
-  if (x.type === "passwordinput") {
-    x.type = "text";
-  } else {
-    x.type = "passwordinput";
-  }
-}
-</script>
 
-        <input type="submit" value="Login">
-      </div>
-      
-    </div>
-  </form>
-</div>
+            <div class="container-my">
+                <form method="POST" action="signin.php">
+                    <div class="row-my">
+                        <h2 style="text-align:center">Login</h2>
+                        <div class="vl">
+                            <span class="vl-innertext">or</span>
+                        </div>
 
-<div class="bottom-container">
-  <div class="row-my">
-    <div class="col">
-      <a href="signup-2.php" style="color:white" class="btn">Sign up</a>
+                        <div class="col">
+                            <a href="#" class="fb btn">
+                                <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                            </a>
+                            <a href="#" class="twitter btn">
+                                <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+                            </a>
+                            <a href="#" class="google btn"><i class="fa fa-google fa-fw">
+                                </i> Login with Google+
+                            </a>
+                        </div>
+
+                        <div class="col">
+                            <div class="hide-md-lg">
+                                <p>Or sign in manually:</p>
+                            </div>
+                            <input type="email" class="form-control" name='emailinput' id="myInput"
+                                   placeholder="name@example.com"  required onchange="validateEmail()" />
+
+                            <input type="password" placeholder="Password" id="pwd" name='passwordinput'
+                                   title="Must contain at least 8 or more characters"
+                                   required onchange="validatePassword()" />
+                            <br><br>
+
+                            <input type="submit" value="Login"/>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="bottom-container">
+                <div class="row-my">
+                    <div class="col">
+                        <a href="signup-2.php" style="color:white" class="btn">Sign up</a>
+                    </div>
+                    <div class="col">
+                        <a href="#" style="color:white" class="btn">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-5 mb-3 text-muted"><?php /*echo $date['month']; echo ' ' ;*/
+                echo $date['year']. " "; ?>&copy; The Indigo Group. All Rights reserved</p>
+        </div>
     </div>
-    <div class="col">
-      <a href="#" style="color:white" class="btn">Forgot password?</a>
-    </div>
-  </div>
-</div>
-<p class="mt-5 mb-3 text-muted"><?php /*echo $date['month']; echo ' ' ;*/ echo $date['year']; echo " "; ?>&copy; The Indigo Group. All Rights reserved</p>
-</div>
-</div>
 </div>
 <!-- <main class="form-signin">
   <form method="POST" action="signin.php">
@@ -296,6 +155,75 @@ function myFunction() {
 </main> -->
 
 
-    
-  </body>
+<script>
+
+
+    // by shera
+
+
+    // selecting the inputs
+    const mailInput = document.querySelector('#myInput');
+    const passInput = document.querySelector('#pwd');
+
+
+    //function to add div after another in dom
+    function insertAfter(newElement, referenceElement) {
+        referenceElement.parentNode.insertBefore(newElement, referenceElement.nextSibling);
+    }
+
+
+    //creating an error div
+    errorElement = document.createElement("div");
+    // adding an error class to div
+    errorElement.className = "error";
+
+
+    //email validation function
+    function validateEmail(){
+
+        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+        if (!mailInput.value.match(validRegex)) {
+
+            mailInput.style.borderColor = 'red'
+            errorElement.innerHTML = "Invalid Email";
+            errorElement.classList.add("email-error")
+            insertAfter(errorElement, mailInput);
+
+        } else {
+            document.querySelector('.email-error') && document.querySelector('.email-error').remove();
+        }
+
+    }
+
+
+    //password validation function
+    function validatePassword(){
+
+        if (passInput.value.length < 8) {
+
+            passInput.style.borderColor = 'red'
+            errorElement.innerHTML = "Password Has to be  8 or more characters;
+            errorElement.classList.add("pass-error")
+            insertAfter(errorElement, passInput);
+
+        } else {
+            document.querySelector('.pass-error') && document.querySelector('.pass-error').remove();
+        }
+
+    }
+
+
+    // end by shera
+
+    // function myFunction() {
+    //     var x = document.getElementById("myInput");
+    //     if (x.type === "passwordinput") {
+    //         x.type = "text";
+    //     } else {
+    //         x.type = "passwordinput";
+    //     }
+    // }
+</script>
+</body>
 </html>
