@@ -3,12 +3,5 @@
 *.png
 *.jpeg
 *.jpg
-# Logs and databases #
-######################
 *.log
-
-# Directory folder structure #
-##############################
 **/bootstrap-5.0.2-examples 
-**/css
-**/js
