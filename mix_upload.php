@@ -2,7 +2,6 @@
 // Initialize the session
 session_start();
 require 'lib/functions.php';
-require 'lib/imageprocessing.php';
 
 $user_id = $_SESSION['id'];
 //$user_email = $_SESSION['email'];

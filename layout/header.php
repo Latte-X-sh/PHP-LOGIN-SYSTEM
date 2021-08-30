@@ -1,7 +1,12 @@
 
-<?php //more php code here coming. ?>
+<?php
+$user_id = $_SESSION['id'];
+$profile_data = fetch_user_data($user_id);//Fetches db data
+$profileImage= $profile_data["profile_image"];  
+ ?>
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
 <!-- this section here is blank since this page is loaded to a file that already has those header details -->
 </head>
@@ -13,7 +18,7 @@
 <!-- LOGO OF THE PAGE -->
 <div class="header-left">
 <a href="index.php" class="logo">
-<img src="assets/img/logo.png" width="40" height="40" alt="">
+<img src="assets/img/logo.png" width="100" height="100" alt="">
 </a>
 </div>
 
@@ -27,8 +32,10 @@
 
 <div class="page-title-box">
 <h3><script>
+    // this code shows the title of the page in the navbar
 let title= document.title;
-document.write(title);</script></h3>
+document.write(title);</script>
+</h3>
 </div>
 
 <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
@@ -260,9 +267,9 @@ document.write(title);</script></h3>
 
 <li class="nav-item dropdown has-arrow main-drop">
 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-<span class="user-img"><img src="assets/img/profiles/avatar-21.jpg" alt="">
+<span class="user-img"><img src="<?php echo $profileImage?>" alt="">
 <span class="status online"></span></span>
-<span>Admin</span> 
+<span><?php echo htmlspecialchars($_SESSION["name"]); ?></span> 
 </a>
 <div class="dropdown-menu">
 <a class="dropdown-item" href="profile.html">My Profile</a>

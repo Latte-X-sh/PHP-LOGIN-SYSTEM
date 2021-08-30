@@ -1,295 +1,492 @@
 <?php
-// Initialize the session
 session_start();
-// var_dump($_SESSION);die();
- 
+require 'lib/functions.php';
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: signin.php");
-    exit;
+  header("location: signin.php");
+  exit;
 }
 ?>
- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <style>
-    body {font-family: Arial, Helvetica, sans-serif;}
-    
-    .navbar {
-      width: 100%;
-      background-color: rgb(24, 110, 24);
-      overflow: auto;
-    }
-    
-    .navbar a {
-      float: left;
-      padding: 12px;
-      color: rgb(235, 241, 241);
-      text-decoration: none;
-      font-size: 17px;
-    }
-    
-    .navbar a:hover {
-      background-color: #000;
-    }
-    
-    .active {
-      background-color: #04AA6D;
-    }
-    
-    @media screen and (max-width: 500px) {
-      .navbar a {
-        float: none;
-        display: block;
-      }
-    }
-    </style>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="Moses Odalo">
+    <meta name="keywords"content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Home</title>
+        
+<link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="assets/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="assets/css/line-awesome.min.css">
+
+<link rel="stylesheet" href="assets/css/select2.min.css">
+
+<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+
+<link rel="stylesheet" href="assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css">
+
+<link rel="stylesheet" href="assets/css/style.css">
+
+
+<!--[if lt IE 9]>
+        <script src="assets/js/html5shiv.min.js"></script>
+        <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 <body>
-<div class="navbar">
-    <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a> 
-    <form class="form-inline" action="/action_page.php">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-success" type="submit">Search</button>
-    </form> 
-    <a href="#"><i class="fa fa-fw fa-poem"></i> Poem</a>
-    <a href="#"><i class="fa fa-fw fa-gallery"></i> Gallery</a>
-    <a href="#"><i class="fa fa-fw fa-envelope"></i> Music</a>
-     <a href="#"><i class="fa fa-fw fa-Videos"></i> Video</a> 
-    <a href="#"><i class="fa fa-fw fa-user"></i> Login/Signup</a>
-  </div>  
-  <div class="container-fluid">
-    
-    <div class="row">
-      <div class="col-sm-4" style="background-color:rgb(244, 250, 230);">.Discover</div>
-      <div class="col-sm-8" style="background-color:rgb(12, 192, 42);">.Postmyart</div>
-  <h2>Trending Music</h2>
-  
-  <div class="row">
-    <div class="col bg-success">
-        <p>street hype vol 2</p>
-        <audio controls>
-            <source src="street hype vol 2 (hearthis.at).mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
-    </div>
-    <div class="col bg-warning">
-      <p>song name</p>
-        <audio controls>
-            <source src=".mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
-    </div>
-    <div class="col bg-success">
-      <p>song name</p>
-        <audio controls>
-            <source src=".mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
-    </div>
-    <div class="col bg-warning">
-      <p>song name</p>
-      <audio controls>
-          <source src=".mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-        </audio>
+<!-- The navbar section is modular and will be called when needed. -->
+<?php require 'layout/header.php'; ?>
+<!-- sidebar section 310 to 597 .Inside the layout folder and we will require it -->
+<?php require 'layout/sidemenu.php'; ?>
+<!-- main page -->
+<div class="page-wrapper">
+<div class="content container-fluid">
+  <br>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" style=" height: 50% !important;">
+      <div class="carousel-item active">
+        <img class="d-block w-100" src="../storage/profile_image/Kimetsu no Yaiba 1920 x 1200.png" alt="First slide">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>...</h5>
+          <p>...</p>
+        </div>
       </div>
-    <div class="col bg-success">
-      <p>song name</p>
-        <audio controls>
-            <source src=".mp3" type="audio/mpeg">
-          Your browser does not support the audio element.
-          </audio>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="../storage/profile_image/Kimetsu no Yaiba 1920 x 1200.png"alt="Second slide">
+        <div class="carousel-caption ">
+          <h5>...</h5>
+          <p>...</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block w-100" src="../storage/profile_image/Kimetsu no Yaiba 1920 x 1200.png"alt="Third slide">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>...</h5>
+          <p>...</p>
+        </div>
+      </div>
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
-  <br>
-  <h2>Trending Videos</h2>
-  <br>
-  <div class="row">
-    <div class="col bg-success">
-        <p>The Hitman's Wife's Bodyguard</p>
-        <video controls autoplay muted>
-            <source src="Watch The Hitman's Wife's Bodyguard (2021).mp4" type="video/mp4">
-            
-          Your browser does not support the video tag.
-          </video>
-    </div>
-    <div class="col bg-warning">
-        <p>Goosebumps 1</p>
-        <video controls autoplay muted>
-            <source src="Goosebumps 1.mp4" type="video/mp4">
-            
-          Your browser does not support the video tag.
-          </video>
-    </div>
-    <div class="col bg-success">
-        <p>Goosebumps 2</p>
-        <video controls autoplay muted>
-            <source src="Goosebumps 2.mp4" type="video/mp4">
-            
-          Your browser does not support the video tag.
-          </video>
-    </div>
-    <div class="col bg-warning">
-        <video controls autoplay muted>
-            <source src="Watch The Hitman's Wife's Bodyguard (2021).mp4" type="video/mp4">
-            
-          Your browser does not support the video tag.
-          </video>
-    </div>
-    <div class="col col bg-success">
-        <video controls autoplay muted>
-            <source src="Watch The Hitman's Wife's Bodyguard (2021).mp4" type="video/mp4">
-            
-          Your browser does not support the video tag.
-          </video>
-    </div>
-    
-    </div>
-    <br>
-    <h2>Trending Reels</h2>
-    <br>
-    <div class="row">
-        <div class="col bg-success">
-          <p>Reel name 1</p>
-          <video  autoplay muted>
-            <source src=".mp4" type="video/mp4">
-            
-          Your browser does not support the video tag.
-          </video>
-        </div>
-        <br>
-        <div class="col bg-warning">
-          
-            <p>Reel name</p>
-            <video  autoplay muted>
-              <source src=".mp4" type="video/mp4">
-              
-            Your browser does not support the video tag.
-            </video>
-        </div>
-        <br>
-          <div class="col bg-success">
-            <p>Reel name</p>
-            <video  autoplay muted>
-              <source src=".mp4" type="video/mp4">
-              
-            Your browser does not support the video tag.
-            </video>
-        </div>
-        <br>
-        <div class="col bg-warning">
-          
-            <p>Reel name</p>
-            <video  autoplay muted>
-              <source src=".mp4" type="video/mp4">
-              
-            Your browser does not support the video tag.
-            </video>
-        </div>
-        <br>
-        <div class="col bg-success">
-          
-            <p>Reel name</p>
-            <video  autoplay muted>
-              <source src=".mp4" type="video/mp4">
-              
-            Your browser does not support the video tag.
-            </video>
-        </div>
-        <br>
-        <div class="col bg-warning">
-          
-            <p>Reel name</p>
-            <video  autoplay muted>
-              <source src=".mp4" type="video/mp4">
-              
-            Your browser does not support the video tag.
-            </video>
-        
-        </div>
-        </div>
-        <br>
-    <h2>Trending memes</h2>
-    <br>
-    <div class="row">
-        <div class="col bg-success">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        <br>
-        <div class="col bg-warning">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        <br>
-        <div class="col bg-success">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        <br>
-        <div class="col bg-warning">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        <br>
-        <div class="col bg-success">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        </div>
-        <br>
-    <h2>Trending photos</h2>
-    <br>
-    <div class="row">
-        <div class="col bg-success">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        <br>
-        <div class="col bg-warning">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        <br>
-        <div class="col bg-success">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        <br>
-        <div class="col bg-warning">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        <br>
-        <div class="col bg-success">
-          <p>caption</p>
-            <img src=".jpg">
-        </div>
-        </div>
-        <br>
-      </div>
-    </div>
+</div>
+<div class="content container-fluid">
+<div class="row">
+<div class="col-sm-12">
+<div class="file-wrap">
+<div class="file-cont-inner">
+<div class="file-content">
+<div class="file-body">
+<div class="file-scroll">
+<div class="file-content-inner">
+<h4>Recent Files</h4>
+<div class="row row-sm">
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-pdf-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Sample.pdf</a></h6>
+<span>10.45kb</span>
+</div>
+<div class="card-footer">
+<span class="d-none d-sm-inline">Last Modified: </span>1 min ago
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-word-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Document.docx</a></h6>
+<span>22.67kb</span>
+</div>
+<div class="card-footer">
+<span class="d-none d-sm-inline">Last Modified: </span>30 mins ago
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-image-o"></i>
+ </div>
+<div class="card-body">
+<h6><a href="">icon.png</a></h6>
+<span>12.47kb</span>
+</div>
+<div class="card-footer">
+<span class="d-none d-sm-inline">Last Modified: </span>1 hour ago
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-excel-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Users.xls</a></h6>
+<span>35.11kb</span>
+</div>
+<div class="card-footer">23 Jul 6:30 PM</div>
+</div>
+</div>
+</div>
+<h4>Files</h4>
+<div class="row row-sm">
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-word-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Updates.docx</a></h6>
+<span>12mb</span>
+</div>
+<div class="card-footer">9 Aug 1:17 PM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-powerpoint-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Vision.ppt</a></h6>
+<span>72.50kb</span>
+</div>
+<div class="card-footer">6 Aug 11:42 AM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-audio-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Voice.mp3</a></h6>
+<span>2.17mb</span>
+</div>
+<div class="card-footer">
+<span class="d-none d-sm-inline">Last Modified: </span>30 Jul 9:00 PM
+</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-pdf-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Tutorials.pdf</a></h6>
+<span>8.2mb</span>
+</div>
+<div class="card-footer">21 Jul 10:45 PM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-excel-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Tasks.xls</a></h6>
+<span>92.82kb</span>
+</div>
+<div class="card-footer">16 Jun 4:59 PM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+ <i class="fa fa-file-image-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Page.psd</a></h6>
+<span>118.71mb</span>
+</div>
+<div class="card-footer">14 Jun 9:00 AM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-text-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">License.txt</a></h6>
+<span>18.7kb</span>
+</div>
+<div class="card-footer">5 May 8:21 PM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-word-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Expenses.docx</a></h6>
+<span>66.2kb</span>
+</div>
+<div class="card-footer">24 Apr 7:50 PM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-audio-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Music.mp3</a></h6>
+<span>3.6mb</span>
+</div>
+<div class="card-footer">13 Mar 2:00 PM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-text-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Installation.txt</a></h6>
+<span>43.9kb</span>
+</div>
+<div class="card-footer">26 Feb 5:01 PM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-video-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">Workflow.mp4</a></h6>
+<span>47.65mb</span>
+</div>
+<div class="card-footer">3 Jan 11:35 AM</div>
+</div>
+</div>
+<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
+<div class="card card-file">
+<div class="dropdown-file">
+<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+<div class="dropdown-menu dropdown-menu-right">
+<a href="#" class="dropdown-item">View Details</a>
+<a href="#" class="dropdown-item">Share</a>
+<a href="#" class="dropdown-item">Download</a>
+<a href="#" class="dropdown-item">Rename</a>
+<a href="#" class="dropdown-item">Delete</a>
+</div>
+</div>
+<div class="card-file-thumb">
+<i class="fa fa-file-code-o"></i>
+</div>
+<div class="card-body">
+<h6><a href="">index.html</a></h6>
+<span>23.7kb</span>
+</div>
+<div class="card-footer">1 Jan 8:55 AM</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- </div> -->
 
+</div>
+</div>
+</div>
 
 </div>
 
-    <h1 class="my-5">Hi, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>. Welcome to the Welcome page.</h1>
-    <p>
-    <a href="Account-settings.php" class="btn btn-primary">View your profile</a>
-        <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
-        <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
-    </p>
+</div>
+
+
+<script src="assets/js/jquery-3.5.1.min.js"></script>
+
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+
+<script src="assets/js/jquery.slimscroll.min.js"></script>
+
+<script src="assets/js/app.js"></script>
 </body>
 </html>

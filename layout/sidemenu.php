@@ -16,7 +16,7 @@
                     <a href="#"><i class="la la-headphones"></i> <span> Discover </span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
                         <li> <a href="index.php"><span>Home </span></a></li>
-                        <li><a href="./pages/index.php">Explore</a></li>
+                        <li><a href="#">Explore</a></li>
                         <li><a href="#">Friends</a></li>
                     </ul>
                 </li>
@@ -32,7 +32,7 @@
                 <li class="submenu">
                     <a href="#"><i class="la la-gear"></i> <span> Settings</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li> <a href="#"><span>Account Profile</span></a></li>
+                        <li> <a href="profile.php"><span>Account Profile</span></a></li>
                         <li><a href="Account-settings.php">Account settings</a></li>
                         <!-- <li><a href="employee-dashboard.html">Friends</a></li> -->
                     </ul>

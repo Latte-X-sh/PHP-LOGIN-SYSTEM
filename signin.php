@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/indigo.png">
     <meta name="description" content="">
     <meta name="author" content="Moses Odalo">
     <meta name="generator" content="Hugo 0.84.0">
