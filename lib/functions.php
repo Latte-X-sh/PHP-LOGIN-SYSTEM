@@ -153,46 +153,22 @@ function update_db_data($array_from_side, $iduser)
                          ELSE :phoneno 
                          END 
                 WHERE id = :id ";
+//Query for Gender
+    $query9 = "UPDATE `users`  SET Gender = CASE 
+        WHEN :gender  is NULL THEN users.Gender
+        WHEN :gender='' THEN users.Gender 
+        ELSE :gender 
+        END     
+                WHERE id = :id ";
 //Query for profile picture and gender pending 
     $testarray = array(
-        $query1, $query2, $query3, $query4, $query5, $query6, $query7, $query8
+        $query1, $query2, $query3, $query4, $query5, $query6, $query7, $query8,$query9,
     );
     $size = sizeof($testarray);
-    $limit = $size - 1;//7
+    $limit = $size - 1;//8
 //   echo $testarray[0];  die();
 
-
-    // $query="UPDATE `users` 
-    //         SET name = CASE name
-    //                         WHEN :name is NULL THEN users.name
-    //                         WHEN :name THEN users.name
-    //                         WHEN users.name is NULL THEN :name
-    //                         ELSE :name
-    //                         END 
-    //         WHERE id = :id ";
-    // $query ="UPDATE `users` 
-    //             SET name = CASE  
-    //                         WHEN :name is NULL THEN users.name
-    //                         WHEN :name='' THEN users.name 
-    //                         ELSE :name
-    //                         END  
-    //             WHERE id = :id ";
-    // $stmt=$pdo->prepare($query);
-    //     $stmt->bindParam(':name',$array_from_side['username']);
-    //     $stmt->bindParam(':fname',$array_from_side['firstname']);
-    //     $stmt->bindParam(':lname',$array_from_side['lastname']);
-    //     $stmt->bindParam(':id',$iduser);
-    //     $result=$stmt->execute(array(
-    //         ':name'=> $array_from_side['username'],
-    //         ':fname'=> $array_from_side['firstname'],
-    //         ':lname'=> $array_from_side['lastname'],
-    //         ':id'=> $iduser
-
-    //     ));
-    //     unset($query);
-
-
-    for ($i = 0; $i <= $limit - 5; $i++) {
+    for ($i = 0; $i <= $limit - 6; $i++) {
         //executes this queries until successful
         $query = $testarray[$i];
         $stmt = $pdo->prepare($query);
@@ -209,7 +185,7 @@ function update_db_data($array_from_side, $iduser)
         ));
         unset($query);
     }
-    for ($y = 3; $y <= $limit - 2; $y++) {
+    for ($y = 3; $y <= $limit - 3; $y++) {
         //executes this queries until successful
         $query = $testarray[$y];
         $stmt = $pdo->prepare($query);
@@ -232,10 +208,12 @@ function update_db_data($array_from_side, $iduser)
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':city', $array_from_side['city']);
         $stmt->bindParam(':phoneno', $array_from_side['phoneno']);
+        $stmt->bindParam(':gender', $array_from_side['gender']);
         $stmt->bindParam(':id', $iduser);
         $result = $stmt->execute(array(
             ':city' => $array_from_side['city'],
             ':phoneno' => $array_from_side['phoneno'],
+            ':gender' => $array_from_side['gender'],
             ':id' => $iduser
 
         ));
@@ -287,10 +265,7 @@ function login_db($emil, $pwd)
     unset($stmt);
     unset($pdo);
 }
-// get_connection(); //this function is only used to test the connection to the database.during dev mode.
-// $email="mitchwangui@gmail.com";
-// $password="123456";
-//  login_db($email , $password);
+
 
 
 
@@ -366,7 +341,41 @@ function handle_audio($mixTitle,$mixFile){
     header("Location:mix_upload.php?message=$message");
 
 
-
-
-
+}
+function account_image_processing($imageData){
+        $iduser = $_SESSION['id'];
+        $imageName= md5($imageData['name']);
+        $imageType= $imageData['type'];
+        $imageTempname= $imageData['tmp_name'];
+        $imageError=    $imageData['error'];
+        $imageSize= $imageData['size'];
+        $imageFiledata = explode('/',$imageType);
+        $size_of_array= sizeof($imageFiledata);
+        // print_r($imageFiledata);die();
+        $imageFileextension = $imageFiledata[$size_of_array-1];
+        if($imageFileextension == "jpeg" || $imageFileextension == "jpg" || $imageFileextension == "png"  ){
+            $destination="storage/profile_image/";
+            $fileNewName= $destination.$imageName; //hashing of the location
+            if(move_uploaded_file($imageTempname,$fileNewName)){
+                $pdo = get_connection();
+                
+                $query ="UPDATE `users` 
+                              SET profile_image = CASE  
+                                WHEN :profile_image is NULL THEN users.profile_image
+                                WHEN :profile_image='' THEN users.profile_image 
+                                ELSE :profile_image
+                                END  
+                            WHERE id = :id ";
+                $stmt = $pdo->prepare($query);  
+                $stmt->bindParam(':profile_image',$fileNewName);
+                $stmt->bindParam(':id', $iduser);
+                $result = $stmt->execute(array(
+                    ':profile_image' => $fileNewName ,
+                    ':id' => $iduser
+                ));
+            
+          
+            }
+        
+        } 
 }

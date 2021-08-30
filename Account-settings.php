@@ -2,14 +2,14 @@
 // Initialize the session
 session_start();
 require 'lib/functions.php';
-require 'lib/imageprocessing.php';
 $user_id = $_SESSION['id'];
 $user_email = $_SESSION['email'];
 // var_dump($_SESSION);die();
 // echo $user_email ; die();
 $profile_data = fetch_user_data($user_id);//Fetches db data
+ $profileImage= $profile_data["profile_image"]; 
+//  echo $profileImage;
 // var_dump($_SESSION);die();
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['password_update'])) {
         if (isset($_POST['old_password'])) {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     if (isset($_POST['Update'])) {
 
-
+        // var_dump($_POST);die();
         // print_r($_FILES['userprofileimage']);die();
         // var_dump($_FILES);die();
         $update_array = array(
@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'country' => '',
             'city' => '',
             'phoneno' => '',
+            'gender' => '',
         );
         if (isset($_FILES['userprofileimage'])) {
             $userimage = $_FILES['userprofileimage'];
@@ -195,7 +196,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <div class="profile-view">
                             <div class="profile-img-wrap">
                                 <div class="profile-img">
-                                    <a href="#"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+                                    <a href="#"><img alt="" src="<?php echo $profileImage ?>"></a>
                                 </div>
                             </div>
                             <div class="profile-basic">
@@ -492,7 +493,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="profile-img-wrap edit-img">
-                                    <img class="inline-block" src="assets/img/profiles/avatar-02.jpg" alt="user">
+                                
+                                    <img class="inline-block" src="<?php echo $profileImage ?>" alt="user">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
                                         <input class="upload" type="file" name="userprofileimage">
