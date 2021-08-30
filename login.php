@@ -6,26 +6,27 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     header('location:index.php');
     exit;
 }
-//we want to read from our db and verify if the data we receive is true. 
+//we want to read from our db and verify if the data we receive is true.
 require 'lib/functions.php';
-$date = getdate(); //footer date -will be moved to the footer section.
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['emailinput'])) { //if those particular arrays exist then assign the appropriate variables their values.
+
+    $password = '';
+    $email = '';
+
+    if (isset($_POST['emailinput'])) {
+        //if those particular arrays exist then assign the appropriate variables their values.
         $email = $_POST['emailinput'];
-    } else {
-        $email = '';
     }
+
     if (isset($_POST['passwordinput'])) {
         $password = $_POST['passwordinput'];
-    } else {
-        $password = '';
     }
-    login_db($email, $password);
-    // var_dump($password , $email);die();
-}
-// if(isset($_POST['']))
 
-// var_dump($date);die();
+    login_db($email, $password);
+
+}
+
 
 
 ?>
@@ -44,23 +45,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
-    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/"> -->
     <!-- Bootstrap core CSS -->
     <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/custom/signin.css" rel="stylesheet">
 
 
 </head>
+
 <body>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<div class="container pt-5">
-    <div class="row">
-        <div class="my-banner">
+
+<div class="container mt-5 pt-5">
+    <div class="row mt-5">
+        <div class="my-banner mt-5">
             <h2>Login here please</h2>
         </div>
         <div class="col-xs-1" align="center">
@@ -91,11 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <p>Or sign in manually:</p>
                             </div>
                             <input type="email" class="form-control" name='emailinput' id="myInput"
-                                   placeholder="name@example.com"  required onchange="validateEmail()" />
+                                   placeholder="name@example.com"  required />
 
                             <input type="password" placeholder="Password" id="pwd" name='passwordinput'
                                    title="Must contain at least 8 or more characters"
-                                   required onchange="validatePassword()" />
+                                   required  />
                             <br><br>
 
                             <input type="submit" value="Login"/>
@@ -115,55 +111,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
             </div>
-            <p class="mt-5 mb-3 text-muted"><?php  echo $date['year']. " "; ?>&copy; The Indigo Group. All Rights reserved</p>
+            <p class="mt-5 mb-3 text-muted">The Indigo Group. All Rights reserved  &copy;   <?php  echo date("Y"); ?> </p>
         </div>
     </div>
 </div>
-<!-- <main class="form-signin">
-  <form method="POST" action="signin.php">
-    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="LOGO" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <div class="form-floating">
-      <input type="email" class="form-control" name='emailinput' id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" name='passwordinput' id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-    <div class ="container">
-      <div class ="row">
-        <div class ="col-xs-12 col-sm-6">
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <div class ="position-relative">
-    <a href="signup.php">sign up </a>
-    </div>
-    <p class="mt-5 mb-3 text-muted">&copy; Indigo G</p>
-  </form>
-</main> -->
 
 
-<script type="text/javascript">
+<script >
 
-
-    // by shera
-
-
+    console.log("JS RUNIN")
     // selecting the inputs
     const mailInput = document.querySelector('#myInput');
     const passInput = document.querySelector('#pwd');
 
+
+    mailInput.addEventListener('change', validateEmail)
+    passInput.addEventListener('change', validatePassword)
 
     //function to add div after another in dom
     function insertAfter(newElement, referenceElement) {
@@ -180,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //email validation function
     function validateEmail(){
 
-        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
         if (!mailInput.value.match(validRegex)) {
 
@@ -213,16 +176,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-    // end by shera
-
-    // function myFunction() {
-    //     var x = document.getElementById("myInput");
-    //     if (x.type === "passwordinput") {
-    //         x.type = "text";
-    //     } else {
-    //         x.type = "passwordinput";
-    //     }
-    // }
 </script>
 </body>
 </html>
