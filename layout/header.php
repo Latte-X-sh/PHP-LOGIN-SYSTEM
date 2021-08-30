@@ -272,18 +272,17 @@ document.write(title);</script>
 <span><?php echo htmlspecialchars($_SESSION["name"]); ?></span> 
 </a>
 <div class="dropdown-menu">
-<a class="dropdown-item" href="profile.html">My Profile</a>
+<a class="dropdown-item" href="#">Dashboard</a>
 <a class="dropdown-item" href="Account-settings.php">Settings</a>
 <a class="dropdown-item" href="logout.php">Logout</a>
 </div>
 </li>
 </ul>
 
-
 <div class="dropdown mobile-user-menu">
 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
 <div class="dropdown-menu dropdown-menu-right">
-<a class="dropdown-item" href="profile.html">My Profile</a>
+<a class="dropdown-item" href="#">Dashboard</a>
 <a class="dropdown-item" href="Account-settings.php">Settings</a>
 <a class="dropdown-item" href="login.html">Logout</a>
 </div>

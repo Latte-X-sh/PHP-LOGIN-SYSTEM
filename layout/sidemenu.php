@@ -32,7 +32,7 @@
                 <li class="submenu">
                     <a href="#"><i class="la la-gear"></i> <span> Settings</span> <span class="menu-arrow"></span></a>
                     <ul style="display: none;">
-                        <li> <a href="profile.php"><span>Account Profile</span></a></li>
+                        <li> <a href="#"><span>Account Dashboard</span></a></li>
                         <li><a href="Account-settings.php">Account settings</a></li>
                         <!-- <li><a href="employee-dashboard.html">Friends</a></li> -->
                     </ul>
