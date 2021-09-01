@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mixFile = $_FILES['mix-file'];
     }
 
-    handle_audio($mixTitle,$mixFile);
+    handle_audio($mixTitle,$mixFile,$user_id);
 }
 ?>
 
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h3 class="page-title">Profile</h3>
                     <!-- Breadcrumb on the page -->
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
                         <li class="breadcrumb-item active">Mix Upload</li>
                     </ul>
                 </div>

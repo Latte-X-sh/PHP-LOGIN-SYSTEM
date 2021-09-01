@@ -213,7 +213,7 @@ input[type=submit]:hover {
       <div class ="container">
       <div class ="row">
         <div class="mx-auto mt-2 col-xl-6 col-xs-6">
-          <label for="floatingInput ">Name</label>      
+          <label for="floatingInput ">User Name</label>      
           <input type="text"  placeholder="John Smith" id="nme" name='name' required><br><br>
           <label for="floatingInput">Email</label> 
           <input type="email" class="form-control"  id='emailinput' name="email" placeholder="johnsmith@email.com" required>

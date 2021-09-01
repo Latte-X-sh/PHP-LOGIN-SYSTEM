@@ -6,6 +6,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: signin.php");
   exit;
 }
+$mixes= mix_feed(0); //gets all the mixes
+$mixes = array_reverse($mixes);
+// $json = json_encode($mixes , JSON_PRETTY_PRINT);
+// //write json to file
+// if (file_put_contents("data.json", $json))
+//     echo "JSON file created successfully...";
+// else 
+//     echo "Oops! Error creating json file...";
+
+// var_dump($mixes);die();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +58,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <?php require 'layout/sidemenu.php'; ?>
 <!-- main page -->
 <div class="page-wrapper">
-<div class="content container-fluid">
+<div class="container ">
   <br>
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -58,24 +68,24 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     </ol>
     <div class="carousel-inner" style=" height: 50% !important;">
       <div class="carousel-item active">
-        <img class="d-block w-100" src="../storage/profile_image/Kimetsu no Yaiba 1920 x 1200.png" alt="First slide">
+        <img class="d-block w-100" src="storage/7475bbeae4fa57aab0bdcf6638c1dfef.jpg" alt="First slide">
         <div class="carousel-caption d-none d-md-block">
-          <h5>...</h5>
-          <p>...</p>
+          <h5>AD Space</h5>
+          <p>#1</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="../storage/profile_image/Kimetsu no Yaiba 1920 x 1200.png"alt="Second slide">
+        <img class="d-block w-100" src="storage/1585563457389.jpg"alt="Second slide">
         <div class="carousel-caption ">
-          <h5>...</h5>
-          <p>...</p>
+          <h5>AD Space</h5>
+          <p>#2</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="../storage/profile_image/Kimetsu no Yaiba 1920 x 1200.png"alt="Third slide">
+        <img class="d-block w-100" src="storage/1fda4a36562f007eddffe0033de7f130.jpg"alt="Third slide">
         <div class="carousel-caption d-none d-md-block">
-          <h5>...</h5>
-          <p>...</p>
+          <h5>AD Space</h5>
+          <p>#3</p>
         </div>
       </div>
     </div>
@@ -98,127 +108,60 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <div class="file-body">
 <div class="file-scroll">
 <div class="file-content-inner">
-<h4>Recent Files</h4>
+<h4>Feed</h4>
 <div class="row row-sm">
+    <!-- for loop inside the col -->
+  <?php foreach ($mixes as $mix) { ?>
 <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-pdf-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Sample.pdf</a></h6>
-<span>10.45kb</span>
-</div>
-<div class="card-footer">
-<span class="d-none d-sm-inline">Last Modified: </span>1 min ago
-</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-word-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Document.docx</a></h6>
-<span>22.67kb</span>
-</div>
-<div class="card-footer">
-<span class="d-none d-sm-inline">Last Modified: </span>30 mins ago
+    <div class="card card-file">
+      <div class="dropdown-file">
+      <a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+      <div class="dropdown-menu dropdown-menu-right">
+      <a href="#" class="dropdown-item">View Details</a>
+      <a href="#" class="dropdown-item">Share</a>
+      <a href="#" class="dropdown-item">Download</a>
+      </div>
+      </div>
+      <div class="card-file-thumb">
+      <i class="fa fa-file-audio-o"></i>
+      </div>
+      <div class="card-body">
+      <h6><a href=""><?php echo $mix["title"];?></a></h6>
+      <span><?php echo $mix["size"];?></span>
+      </div>
+      <div class="card-footer">
+      <span class="d-none d-sm-inline">Date Uploaded: </span><?php echo $mix["date-created"];?>
 </div>
 </div>
 </div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
+<?php } ?>
 </div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-image-o"></i>
- </div>
-<div class="card-body">
-<h6><a href="">icon.png</a></h6>
-<span>12.47kb</span>
-</div>
-<div class="card-footer">
-<span class="d-none d-sm-inline">Last Modified: </span>1 hour ago
-</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-excel-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Users.xls</a></h6>
-<span>35.11kb</span>
-</div>
-<div class="card-footer">23 Jul 6:30 PM</div>
-</div>
-</div>
-</div>
-<h4>Files</h4>
+<h4>Uploads</h4>
 <div class="row row-sm">
+  <?php foreach ($mixes as $mix) { ?>
 <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
+    <div class="card card-file">
+      <div class="dropdown-file">
+      <a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+      <div class="dropdown-menu dropdown-menu-right">
+      <a href="#" class="dropdown-item">View Details</a>
+      <a href="#" class="dropdown-item">Share</a>
+      <a href="#" class="dropdown-item">Download</a>
+      </div>
+      </div>
+      <div class="card-file-thumb">
+      <i class="fa fa-file-audio-o"></i>
+      </div>
+      <div class="card-body">
+      <h6><a href=""><?php echo $mix["title"];?></a></h6>
+      <span><?php echo $mix["size"];?></span>
+      </div>
+      <div class="card-footer">
+      <span class="d-none d-sm-inline">Date Uploaded: </span><?php echo $mix["date-created"];?>
 </div>
 </div>
-<div class="card-file-thumb">
-<i class="fa fa-file-word-o"></i>
 </div>
-<div class="card-body">
-<h6><a href="">Updates.docx</a></h6>
-<span>12mb</span>
-</div>
-<div class="card-footer">9 Aug 1:17 PM</div>
-</div>
-</div>
+<?php } ?>
 <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
 <div class="card card-file">
 <div class="dropdown-file">

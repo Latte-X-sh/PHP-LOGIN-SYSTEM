@@ -279,7 +279,7 @@ function sanitizeText($textString) {
 
 
 
-function handle_audio($mixTitle,$mixFile){
+function handle_audio($mixTitle,$mixFile,$uid){
 
     $message = "";
 
@@ -291,12 +291,12 @@ function handle_audio($mixTitle,$mixFile){
    
 
     $fileNameCmps = explode(".", $fileName);
-    // print_r($fileNameCmps);die();
+    // print_r($fileNameCmps);
     $fileExtension = strtolower(end($fileNameCmps));
-
+    // print_r($fileExtension);die();
 
     $newFileName = md5(time() . $fileNameCmps[0]) . '.' . $fileExtension;
-
+    // print_r($newFileName);die();
     $allowedFileExtensions = array('mp3');
 
     if (in_array($fileExtension, $allowedFileExtensions)) {
@@ -309,11 +309,11 @@ function handle_audio($mixTitle,$mixFile){
         {
 
             $pdo = get_connection();
-            $query = "INSERT INTO `mixes`(`title`, `size`, `type`, `filename`) VALUES (?,?,?,?)";
+            $query = "INSERT INTO `mixes`(`title`, `size`, `type`, `filename`,`dj_id`) VALUES (?,?,?,?,?)";
 
             $stmt = $pdo->prepare($query);
 
-            $stmt->execute([sanitizeText($mixTitle) , $fileSize ,$fileType ,$newFileName]);
+            $stmt->execute([sanitizeText($mixTitle) , $fileSize ,$fileType ,$newFileName,$uid]);
 
             $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -378,4 +378,14 @@ function account_image_processing($imageData){
             }
         
         } 
+}
+function mix_feed(){
+    $pdo = get_connection();
+    $query ='SELECT * FROM mixes';
+    // if($limit){
+    //     $query = $query.' LIMIT '.$limit; //spaces in the sql code is important
+    // }
+    $results= $pdo->query($query);
+    $mixes = $results->fetchAll(PDO::FETCH_ASSOC);
+    return $mixes;
 }
