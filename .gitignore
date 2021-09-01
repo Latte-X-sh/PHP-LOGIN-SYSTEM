@@ -1,7 +1,7 @@
 .idea
 *.mp3
 *.png
-*.jpeg
-*.jpg
+# *.jpeg
+# *.jpg
 *.log
 **/bootstrap-5.0.2-examples 
