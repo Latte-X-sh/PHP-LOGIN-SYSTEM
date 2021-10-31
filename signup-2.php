@@ -1,8 +1,12 @@
 <?php
 require 'lib/functions.php'; //COPY AND PASTE CONTENT OF THAT PAGE HERE!
-
+$data = fetch_dbUsername();
+$dataSize = sizeof($data);
+$dataJSON = json_encode($data);
 if($_SERVER['REQUEST_METHOD'] =='POST'){ //CLIENT AND SERVER CONNECTION
- 
+// var_dump($dataJSON); //
+// die();
+
 if(isset($_POST['name'])){
   $name=$_POST['name'];//if it has data then attached the value to the variable
 }else {
@@ -50,7 +54,8 @@ unset($pdo);//closes the connection
     <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/"> -->
     <!-- Bootstrap core CSS -->
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
+<!-- Bootstrap icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     <style>
    body {
   font-family: Arial, Helvetica, sans-serif;
@@ -197,6 +202,41 @@ input[type=submit]:hover {
     <br>
 <div class ="container pt-5" >
   <div class ="row">
+  <div class ="col-12">
+    <div class="alert alert-success" id="SuccessAlert">
+            <strong>Succes!</strong> All data has been submitted successfully.
+        </div>
+        <div class="alert alert-danger" id="FailureAlert">
+            <strong>Failure!</strong> Empty field.
+        </div>
+        <div class="alert alert-dark" id="CautionAlert">
+            <strong>Caution!</strong> Please provide a valid email.
+        </div>
+        <div class="alert alert-primary" id="Pwd8Alert">
+            <strong>Warning!</strong> Passwords should contain atleast 8 characters.
+        </div>
+        <div class="alert alert-primary" id="Pwd8info">
+            <strong>Warning!</strong> Passwords should contain atleast a digit.
+        </div>
+        <div class="alert alert-primary" id="PwdSymbolAlert">
+            <strong>Warning!</strong> Passwords should contain atleast a symbol @#.
+        </div>
+        <div class="alert alert-primary" id="PwdUpperAlert">
+            <strong>Warning!</strong> Passwords should contain atleast an UpperCase character.
+        </div>
+        <div class="alert alert-primary" id="PwdLowerAlert">
+            <strong>Warning!</strong> Passwords should contain atleast an LowerCase character.
+        </div>
+        <div class="alert alert-primary" id="PwdconfAlert">
+            <strong>Warning!</strong> Passwords do not match.
+        </div>
+        <div class="alert alert-warning" id="UnameAlert">
+            <strong>Oops!</strong> Username already exists.
+        </div>
+        <div class="alert alert-warning" id="UnamePassAlert">
+            <strong>Oops!</strong> Choose a stronger Username,the one selected contains some bits of your password.
+        </div>
+</div>
     <div class ="my-banner">
   <h2>Register here!</h2>
 </div>
@@ -219,11 +259,23 @@ input[type=submit]:hover {
           <input type="email" class="form-control"  id='emailinput' name="email" placeholder="johnsmith@email.com" required>
         </div>
         <div class =" mx-auto mt-2 col-xl-6 col-xs-6 " >
-        <label for="floatingPassword">Password</label>      
+          <div class="container">
+            <div class=" row">
+          
+        <label for="floatingPassword">Password</label>  
+        <div class ="col-10">    
         <input type="password"  placeholder="Password" id="pwd" name='Password' required><br><br>
-        <label for="floatingPassword">Confirm Password</label> 
-        <input type="password" class="form-control" name="ConfirmPassword" id='confirmpassword' placeholder="Confirm Password" required>
+              </div>
+        <div class ="col-2 mx-auto  py-3 ">
+              <i class="bi bi-eye-slash" id='togglePassword'></i>
         </div>
+            </div>
+          </div>
+          <div class ="container">
+        <label for="floatingPassword">Confirm Password</label> 
+        <input type="password" class="form-control" id='confirmpassword' name="ConfirmPassword"  placeholder="Confirm Password" required>
+      </div>
+      </div>
    
     </div>
   </div>
@@ -232,19 +284,7 @@ input[type=submit]:hover {
         <div class="hide-md-lg">
           <p>Or sign up manually:</p>
         </div>
-      
-<script>
-// function myFunction() {
-//   var x = document.getElementById("myInput");
-//   if (x.type === "passwordinput") {
-//     x.type = "text";
-//   } else {
-//     x.type = "passwordinput";
-//   }
-// }
-</script>
-
-        <input type="submit" value="Register">
+        <input type="submit" value="Register" id="signupBtn">
       </div>
       <!-- reset button -->
       <div class =" mx-auto col-xl-1 col-sm-3">
@@ -270,41 +310,205 @@ input[type=submit]:hover {
 </div>
 </div>
 </div>
-<!-- <main class="form-signin">
-  <form method="POST" action="signin.php">
-    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="LOGO" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+<script lang="javascript">
+  //defining the alert variables
+   let successAlert = document.getElementById("SuccessAlert").style.display = "none";
+   let failureAlert = document.getElementById("FailureAlert").style.display = "none";
+   let cautionAlert = document.getElementById("CautionAlert").style.display = "none";
+   let pwd8alert = document.getElementById("Pwd8Alert").style.display = "none";
+   let pwdSymblalert = document.getElementById("PwdSymbolAlert").style.display = "none";
+   let pwdUpperAlert = document.getElementById("PwdUpperAlert").style.display = "none";
+   let pwdLowerAlert = document.getElementById("PwdLowerAlert").style.display = "none";
+   let pwdconfAlert = document.getElementById("PwdconfAlert").style.display = "none";
+   let unameAlert = document.getElementById("UnameAlert").style.display= "none";
+   let UnamePassAlert = document.getElementById("UnamePassAlert").style.display= "none";
+   let pwddigitAlert = document.getElementById("Pwd8info").style.display= "none";
+   //UnamePassAlert
+   const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#pwd');
+  const ConfirmPasswordpwd = document.querySelector('#confirmpassword');
+  //Password toggle function
+  togglePassword.addEventListener('click', function (e) {
+      // toggle the type attribute
+      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      const type2 = password.getAttribute('type') === 'password' ? 'text' : 'password';
+      password.setAttribute('type', type);
+      ConfirmPasswordpwd.setAttribute('type', type2);
+      // toggle the eye / eye slash icon
+      this.classList.toggle('bi-eye');
+  });
+  //define functions
+  function PasswordValidation(Password,ConfirmPassword){
+      const PasswordSymbols = /(?=.*[!@#\$%\^\&*\)\(+=.,_-])/g; //any combination with the follwing content of the word sad will return true
+      const PasswordLength = /(?=.{8,})/;
+      const PasswordsmallCase =/(?=.*[a-z])/;
+      const PasswordUpperCase = /(?=.*[A-Z])/;
+      const PasswordDigits = /(?=.*[0-9])/;
+      //define an array that will allow me to validate the password
+      let validArray = [];
+      if(Password == ConfirmPassword){
+          // if(Password == ''){
+          // // let failureAlert = document.getElementById("FailureAlert").style.display = "block";
+          // }
+        let pwdconfAlert = document.getElementById("PwdconfAlert").style.display = "none";
+          if(PasswordLength.test(Password)){
+          let pwd8alert = document.getElementById("Pwd8Alert").style.display = "none";
+         validArray.push('Password pass1')
+          }else{
+              let pwd8alert = document.getElementById("Pwd8Alert").style.display = "block";
+          }
+          if(PasswordSymbols.test(Password)){
+             let pwdSymblalert = document.getElementById("PwdSymbolAlert").style.display = "none";  
+             validArray.push('Password pass2')
+          }else{
+              let pwdSymblalert = document.getElementById("PwdSymbolAlert").style.display = "block";
+          }
+          
+          if(PasswordDigits.test(Password)){
+              let pwddigitAlert = document.getElementById("Pwd8info").style.display= "none";
+              validArray.push('Password pass3')
+          }else{
+              let pwddigitAlert = document.getElementById("Pwd8info").style.display= "block";
+              console.log("fail3");
+          }
+          
+          if(PasswordUpperCase.test(Password)){
+              let pwdUpperAlert = document.getElementById("PwdUpperAlert").style.display = "none";
+              validArray.push('Password pass4')
+          }else{
+              let pwdUpperAlert = document.getElementById("PwdUpperAlert").style.display = "block";
+          }
+          
+          if(PasswordsmallCase.test(Password)){
+              let pwdLowerAlert = document.getElementById("PwdLowerAlert").style.display = "none";
+              validArray.push('Password pass5')
+          }else{
+          let pwdLowerAlert = document.getElementById("PwdLowerAlert").style.display = "block";
+          }
+          
+      }else{
+          let pwdconfAlert = document.getElementById("PwdconfAlert").style.display = "block";
+      }
+  if(validArray.length == 5){
+      console.log(validArray);
+      return Password;
+  }
+  
+  
+  }
+  function EmailValidation(emailInput){
+  const emailRegex =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  let validEmailArray = [];
+  if(emailRegex.test(emailInput)){
+      let cautionAlert = document.getElementById("CautionAlert").style.display = "none";
+      validEmailArray.push('EmailPass');
+  }else{
+      if(emailInput == ''){
+      let failureAlert = document.getElementById("FailureAlert").style.display = "block";
+      }
+      let failureAlert = document.getElementById("FailureAlert").style.display = "none";
+      let cautionAlert = document.getElementById("CautionAlert").style.display = "block";
+  
+  }
+  if(validEmailArray.length == 1){
+      console.log(validEmailArray);
+      return emailInput;
+  }
+  
+  
+  } 
+  //Username Validation
+  //ill consume some fake ass human random api so we can check the status if the usernames listed exist or not
+  function userNameValidation(username,password){
+      //username shouldn't match your password or contain combinations found in your password
+    //^(?=.*\bjack\b)(?=.*\bjames\b).*$
 
-    <div class="form-floating">
-      <input type="email" class="form-control" name='emailinput' id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" name='passwordinput' id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-    <div class ="container">
-      <div class ="row">
-        <div class ="col-xs-12 col-sm-6">
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <div class ="position-relative">
-    <a href="signup.php">sign up </a>
-    </div>
-    <p class="mt-5 mb-3 text-muted">&copy; Indigo Group <?php //echo $date['month']; echo ' ' ; echo $date['year']; ?></p>
-  </form>
-</main> -->
-
-
+    let testData = '<?= $dataJSON ?>'; // JSON format
+    let jsonData = JSON.parse(testData);
+    //console.log(json[0].name);
+    //console.log(Object.keys(testDataObj));
+      const MatchRege1 = `${password}`;
+      // console.log(MatchRege1); //regex from the passwordcombination
+      //it cant detect the pattern if the password is not the same or exact e.g L caps and l small aren't the same
+      //so we put everything into a lowercase
+      const Matchlower = MatchRege1.toLowerCase();
+      const MatchRegex = new RegExp(Matchlower) ;
+      if(password == null){
+      console.log("catched the bug.Password empty", typeof password);
+      //LatteXz22@
+      }else{
+        let unamePass = [];
+        let newUsername = username.toLowerCase();
+        if(MatchRegex.test(newUsername)){
+            let UnamePassAlert = document.getElementById("UnamePassAlert").style.display= "block";
+            console.log("the username and password are alike");
+        }else{
+            let UnamePassAlert = document.getElementById("UnamePassAlert").style.display= "none";
+          //checking the username from db if there is a match
+            let uCheckvalidator = [];
+            //console.log(json.length); length of the array containing an object
+                for(let i = 0 ; i <= jsonData.length ; i++ ){
+                    var newvalObj = jsonData[i]; //object property for name
+                    var newval = newvalObj.name;
+                    //console.log(newval);
+                        if(newUsername === newval.toLowerCase()){
+                            uCheckvalidator.push(newval);
+                            console.log('Username exist');
+                            let unameAlert = document.getElementById("UnameAlert").style.display= "block";
+                            break;
+                        }else{
+                          let unameAlert = document.getElementById("UnameAlert").style.display= "none";
+                            uCheckvalidator.push('0');
+                             if(uCheckvalidator.length == jsonData.length){ //the total number of users
+                            console.log('Username is unique');
+                            //   //const trueVal =  'Username is unique'; //debuging
+                            unamePass.push('Usernamepass');
+                            console.log(unamePass.length);
+                            if(unamePass.length == 1){
+                                console.log(unamePass);
+                                  return username; 
+                                   }
+                             }
+                        }
+              }
+              
+        }
+      
+      }
+  
+  }
+  
+  //we want to add an event listener to our submit button
+  var form = document.querySelector("form");
+  let Subbutton = document.getElementById("signupBtn");
+  
+  form.addEventListener("submit", function(event){
+  //stop form submission
+      event.preventDefault();
+  //logic flow
+  let uname = document.getElementById("nme").value;
+  let email = document.getElementById("emailinput").value;
+  let origpwd = document.getElementById("pwd").value;
+  let confirmpwd = document.getElementById("confirmpassword").value;
+  
+  let correctPassword = PasswordValidation(origpwd,confirmpwd);
+  let correctUsername = userNameValidation(uname,correctPassword);
+  let correctEmail = EmailValidation(email);
+  //declare new variables to append the new values there
+  if(typeof correctEmail != 'undefined' && typeof correctPassword != 'undefined'  && typeof correctUsername != 'undefined'){
+      console.log(correctPassword,correctEmail,correctUsername);
+      form.submit();
+      //alert('You can now submit the data');//form.submit(); //submite the data
+  }else{
+      console.log('There is still an error in signing up');
+  }
+  
+  
     
+  });
+  
+  
+  
+  </script>
   </body>
 </html>

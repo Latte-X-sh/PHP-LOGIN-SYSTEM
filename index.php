@@ -68,22 +68,22 @@ $mixes = array_reverse($mixes);
     </ol>
     <div class="carousel-inner" style=" height: 50% !important;">
       <div class="carousel-item active">
-        <img class="d-block w-100" src="storage/7475bbeae4fa57aab0bdcf6638c1dfef.jpg" alt="First slide">
-        <div class="carousel-caption d-none d-md-block">
+        <img class="d-block w-100" src="7475bbeae4fa57aab0bdcf6638c1dfef.jpg" alt="First slide">
+        <div class="carousel-caption ">
           <h5>AD Space</h5>
           <p>#1</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="storage/1585563457389.jpg"alt="Second slide">
+        <img class="d-block w-100" src="1585563457389.jpg"alt="Second slide">
         <div class="carousel-caption ">
           <h5>AD Space</h5>
           <p>#2</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="storage/1fda4a36562f007eddffe0033de7f130.jpg"alt="Third slide">
-        <div class="carousel-caption d-none d-md-block">
+        <img class="d-block w-100" src="1fda4a36562f007eddffe0033de7f130.jpg"alt="Third slide">
+        <div class="carousel-caption ">
           <h5>AD Space</h5>
           <p>#3</p>
         </div>
@@ -101,7 +101,7 @@ $mixes = array_reverse($mixes);
 </div>
 <div class="content container-fluid">
 <div class="row">
-<div class="col-sm-12">
+<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 <div class="file-wrap">
 <div class="file-cont-inner">
 <div class="file-content">
@@ -109,7 +109,7 @@ $mixes = array_reverse($mixes);
 <div class="file-scroll">
 <div class="file-content-inner">
 <h4>Feed</h4>
-<div class="row row-sm">
+<div class="row ">
     <!-- for loop inside the col -->
   <?php foreach ($mixes as $mix) { ?>
 <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
@@ -137,7 +137,7 @@ $mixes = array_reverse($mixes);
 <?php } ?>
 </div>
 <h4>Uploads</h4>
-<div class="row row-sm">
+<div class="row ">
   <?php foreach ($mixes as $mix) { ?>
 <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
     <div class="card card-file">
@@ -162,184 +162,7 @@ $mixes = array_reverse($mixes);
 </div>
 </div>
 <?php } ?>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-powerpoint-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Vision.ppt</a></h6>
-<span>72.50kb</span>
-</div>
-<div class="card-footer">6 Aug 11:42 AM</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-audio-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Voice.mp3</a></h6>
-<span>2.17mb</span>
-</div>
-<div class="card-footer">
-<span class="d-none d-sm-inline">Last Modified: </span>30 Jul 9:00 PM
-</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-pdf-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Tutorials.pdf</a></h6>
-<span>8.2mb</span>
-</div>
-<div class="card-footer">21 Jul 10:45 PM</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-excel-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Tasks.xls</a></h6>
-<span>92.82kb</span>
-</div>
-<div class="card-footer">16 Jun 4:59 PM</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
- <i class="fa fa-file-image-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Page.psd</a></h6>
-<span>118.71mb</span>
-</div>
-<div class="card-footer">14 Jun 9:00 AM</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-text-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">License.txt</a></h6>
-<span>18.7kb</span>
-</div>
-<div class="card-footer">5 May 8:21 PM</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-word-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Expenses.docx</a></h6>
-<span>66.2kb</span>
-</div>
-<div class="card-footer">24 Apr 7:50 PM</div>
-</div>
-</div>
-<div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
-<div class="card card-file">
-<div class="dropdown-file">
-<a href="" class="dropdown-link" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-<div class="dropdown-menu dropdown-menu-right">
-<a href="#" class="dropdown-item">View Details</a>
-<a href="#" class="dropdown-item">Share</a>
-<a href="#" class="dropdown-item">Download</a>
-<a href="#" class="dropdown-item">Rename</a>
-<a href="#" class="dropdown-item">Delete</a>
-</div>
-</div>
-<div class="card-file-thumb">
-<i class="fa fa-file-audio-o"></i>
-</div>
-<div class="card-body">
-<h6><a href="">Music.mp3</a></h6>
-<span>3.6mb</span>
-</div>
-<div class="card-footer">13 Mar 2:00 PM</div>
-</div>
-</div>
+
 <div class="col-6 col-sm-4 col-md-3 col-lg-4 col-xl-3">
 <div class="card card-file">
 <div class="dropdown-file">

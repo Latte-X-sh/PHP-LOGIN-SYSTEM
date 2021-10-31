@@ -23,6 +23,18 @@ function fetch_db()
 
 }
 
+function fetch_dbUsername()
+{ //works well(fetches username data from the db)
+    $pdo = get_connection();
+    // var_dump($pdo); die();
+    $query = "SELECT `name` FROM users " ;
+    $results = $pdo->query($query);
+    $userNames = $results->fetchAll();
+    return $userNames;
+
+}
+
+
 function fetch_user_data($userdata)
 {
     //get connections

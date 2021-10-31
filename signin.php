@@ -92,11 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <p>Or sign in manually:</p>
                             </div>
                             <input type="email" class="form-control" name='emailinput' id="myInput"
-                                   placeholder="name@example.com"  required onchange="validateEmail()" />
+                                   placeholder="name@example.com"   /> 
 
                             <input type="password" placeholder="Password" id="pwd" name='passwordinput'
                                    title="Must contain at least 8 or more characters"
-                                   required onchange="validatePassword()" />
+                                    />
                             <br><br>
 
                             <input type="submit" value="Login"/>
