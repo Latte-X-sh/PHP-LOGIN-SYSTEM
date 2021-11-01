@@ -1,8 +1,10 @@
 <?php
 require 'lib/functions.php'; //COPY AND PASTE CONTENT OF THAT PAGE HERE!
 $data = fetch_dbUsername();
+$Edata = fetch_dbEmail();
 $dataSize = sizeof($data);
 $dataJSON = json_encode($data);
+$EdataJson = json_encode($Edata);
 if($_SERVER['REQUEST_METHOD'] =='POST'){ //CLIENT AND SERVER CONNECTION
 // var_dump($dataJSON); //
 // die();
@@ -40,7 +42,7 @@ unset($pdo);//closes the connection
 <!doctype html>
 <html lang="en">
   <head>
-  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="./assets/img/favicon.ico">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -53,7 +55,7 @@ unset($pdo);//closes the connection
     <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
     <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/"> -->
     <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="./assets/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     <style>
@@ -209,8 +211,11 @@ input[type=submit]:hover {
         <div class="alert alert-danger" id="FailureAlert">
             <strong>Failure!</strong> Empty field.
         </div>
-        <div class="alert alert-dark" id="CautionAlert">
-            <strong>Caution!</strong> Please provide a valid email.
+        <div class="alert alert-danger" id="CautionAlert">
+            <strong>Caution!</strong> Please provide a valid email.The email exists or its not valid.
+        </div>
+        <div class="alert alert-danger" id="CautionEAlert">
+            <strong>Caution!</strong> The provided email exists.
         </div>
         <div class="alert alert-primary" id="Pwd8Alert">
             <strong>Warning!</strong> Passwords should contain atleast 8 characters.
@@ -302,7 +307,7 @@ input[type=submit]:hover {
       <a href="signin.php" style="color:white" class="btn">Already have an account?Sign in</a>
     </div>
     <div class="col">
-      <a href="#" style="color:white" class="btn">Forgot password?</a>
+      <!-- <a href="#" style="color:white" class="btn">Forgot password?</a> -->
     </div>
   </div>
 </div>
@@ -311,10 +316,13 @@ input[type=submit]:hover {
 </div>
 </div>
 <script lang="javascript">
+  let testData = '<?= $dataJSON ?>'; // JSON format
+  let Edatatest = '<?= $EdataJson ?>';
   //defining the alert variables
    let successAlert = document.getElementById("SuccessAlert").style.display = "none";
    let failureAlert = document.getElementById("FailureAlert").style.display = "none";
    let cautionAlert = document.getElementById("CautionAlert").style.display = "none";
+   let cautionEAlert = document.getElementById("CautionEAlert").style.display = "none";
    let pwd8alert = document.getElementById("Pwd8Alert").style.display = "none";
    let pwdSymblalert = document.getElementById("PwdSymbolAlert").style.display = "none";
    let pwdUpperAlert = document.getElementById("PwdUpperAlert").style.display = "none";
@@ -398,10 +406,29 @@ input[type=submit]:hover {
   }
   function EmailValidation(emailInput){
   const emailRegex =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  let emailData =  JSON.parse(Edatatest);
   let validEmailArray = [];
+  let evalidator = []
   if(emailRegex.test(emailInput)){
       let cautionAlert = document.getElementById("CautionAlert").style.display = "none";
-      validEmailArray.push('EmailPass');
+      for(let i = 0 ;i < emailData.length ; i++){
+        var EmailInstance = emailData[i];
+        var ExactEmail = EmailInstance.email;
+        if(emailInput == ExactEmail.toLowerCase()){
+          let cautionEAlert = document.getElementById("CautionEAlert").style.display = "block";
+          console.log("Email exist");
+          break;
+        }else{
+          let cautionEAlert = document.getElementById("CautionEAlert").style.display = "none";
+          evalidator.push(0);
+            if(emailData.length == evalidator.length)
+            {
+            console.log("Email is unique");
+            validEmailArray.push('EmailPass');
+            }
+        }
+      }
+     
   }else{
       if(emailInput == ''){
       let failureAlert = document.getElementById("FailureAlert").style.display = "block";
@@ -423,7 +450,7 @@ input[type=submit]:hover {
       //username shouldn't match your password or contain combinations found in your password
     //^(?=.*\bjack\b)(?=.*\bjames\b).*$
 
-    let testData = '<?= $dataJSON ?>'; // JSON format
+  
     let jsonData = JSON.parse(testData);
     //console.log(json[0].name);
     //console.log(Object.keys(testDataObj));
@@ -447,7 +474,7 @@ input[type=submit]:hover {
           //checking the username from db if there is a match
             let uCheckvalidator = [];
             //console.log(json.length); length of the array containing an object
-                for(let i = 0 ; i <= jsonData.length ; i++ ){
+                for(let i = 0 ; i < jsonData.length ; i++ ){
                     var newvalObj = jsonData[i]; //object property for name
                     var newval = newvalObj.name;
                     //console.log(newval);
@@ -458,12 +485,12 @@ input[type=submit]:hover {
                             break;
                         }else{
                           let unameAlert = document.getElementById("UnameAlert").style.display= "none";
-                            uCheckvalidator.push('0');
+                            uCheckvalidator.push(0);
                              if(uCheckvalidator.length == jsonData.length){ //the total number of users
                             console.log('Username is unique');
                             //   //const trueVal =  'Username is unique'; //debuging
                             unamePass.push('Usernamepass');
-                            console.log(unamePass.length);
+                            //console.log(unamePass.length);
                             if(unamePass.length == 1){
                                 console.log(unamePass);
                                   return username; 

@@ -34,6 +34,18 @@ function fetch_dbUsername()
 
 }
 
+function fetch_dbEmail()
+{ //works well(fetches username data from the db)
+    $pdo = get_connection();
+    // var_dump($pdo); die();
+    $query = "SELECT `email` FROM users " ;
+    $results = $pdo->query($query);
+    $userEmails = $results->fetchAll();
+    return $userEmails;
+
+}
+
+
 
 function fetch_user_data($userdata)
 {
@@ -265,13 +277,16 @@ function login_db($emil, $pwd)
                 $_SESSION["email"] = $email;
                 header('location:/login module/index.php');
             } else {
-                $login_err = "Invalid email or password.";
+             $login_err = "Invalid email or password.";
+             header('location:/login module/signin.php?1'.$login_err);
             }
         } else {
             $login_err = "Invalid email or password.";
+            header('location:/login module/signin.php?2'.$login_err);
         }
     } else {
-        $login_err = "Invalid email or password";//if the statement return a number not 1(true) then display this error message.
+        $login_err = "Invalid email or password.";
+        header('location:/login module/signin.php?3'.$login_err);//if the statement return a number not 1(true) then display this error message.
     }
     // Close statement
     unset($stmt);

@@ -20,7 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $password = '';
     }
-    login_db($email, $password);
+   login_db($email, $password);
+  
     // var_dump($password , $email);die();
 }
 // if(isset($_POST['']))
@@ -36,19 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/indigo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="./assets/img/favicon.ico">
     <meta name="description" content="">
     <meta name="author" content="Moses Odalo">
     <meta name="generator" content="Hugo 0.84.0">
     <title>Signin Page</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="./css/bootstrap.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
     <!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/"> -->
     <!-- Bootstrap core CSS -->
-    <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/custom/signin.css" rel="stylesheet">
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/custom/signin.css" rel="stylesheet">
 
 
 </head>
@@ -68,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
             <div class="container-my">
-                <form method="POST" action="signin.php">
+                <form method="POST" action="signin.php" id='login'>
                     <div class="row-my">
                         <h2 style="text-align:center">Login</h2>
                         <div class="vl">
@@ -88,18 +89,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
                         <div class="col">
-                            <div class="hide-md-lg">
-                                <p>Or sign in manually:</p>
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="OopsAlert">
+                                <strong>Invalid!</strong> Password and Email Combination.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="closebtn">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="alert alert-danger" id="CautionAlert">
+                                <strong>Caution!</strong> Please provide a valid email.
+                            </div>
+                            <div class="alert alert-danger" id="CautionEAlert">
+                                <strong>Caution!</strong> Please provide an email.
                             </div>
                             <input type="email" class="form-control" name='emailinput' id="myInput"
-                                   placeholder="name@example.com"   /> 
-
+                                   placeholder="Email"   /> 
+                            <div class="alert alert-danger" id="CautionPAlert">
+                                <strong>Caution!</strong> Please provide a password .
+                            </div>  
                             <input type="password" placeholder="Password" id="pwd" name='passwordinput'
-                                   title="Must contain at least 8 or more characters"
+                                   autocomplete='off'
                                     />
+                             <small></small>
                             <br><br>
 
-                            <input type="submit" value="Login"/>
+                            <input type="submit" value="Login" id="loginBtn"/>
                         </div>
 
                     </div>
@@ -120,110 +133,72 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 </div>
-<!-- <main class="form-signin">
-  <form method="POST" action="signin.php">
-    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="LOGO" width="72" height="57">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <div class="form-floating">
-      <input type="email" class="form-control" name='emailinput' id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control" name='passwordinput' id="floatingPassword" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-    <div class ="container">
-      <div class ="row">
-        <div class ="col-xs-12 col-sm-6">
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <div class ="position-relative">
-    <a href="signup.php">sign up </a>
-    </div>
-    <p class="mt-5 mb-3 text-muted">&copy; Indigo G</p>
-  </form>
-</main> -->
-
 
 <script type="text/javascript">
-
-
-    // by shera
-
-
-    // selecting the inputs
-    const mailInput = document.querySelector('#myInput');
-    const passInput = document.querySelector('#pwd');
-
-
-    //function to add div after another in dom
-    function insertAfter(newElement, referenceElement) {
-        referenceElement.parentNode.insertBefore(newElement, referenceElement.nextSibling);
+let CautionEmail = document.getElementById('CautionAlert').style.display ="none";
+let CautionEmptyEmail = document.getElementById('CautionEAlert').style.display ="none";
+let CautionPassword = document.getElementById('CautionPAlert').style.display ="none";
+let alertclose = document.getElementById("closebtn").addEventListener("click", function (){
+    let opsAlert = document.getElementById('OopsAlert').style.display ="none";
+}); 
+let currentLocation = window.location.href;
+    let urlLocation = currentLocation.slice(45);
+    if( urlLocation == 'Invalid%20email%20or%20password.'){
+        let opsAlert = document.getElementById('OopsAlert').style.display ="block";
+        console.log(urlLocation+'good');
+    }else{
+        let opsAlert = document.getElementById('OopsAlert').style.display ="none";
     }
 
 
-    //creating an error div
-    errorElement = document.createElement("div");
-    // adding an error class to div
-    errorElement.className = "error";
 
-
-    //email validation function
-    function validateEmail(){
-
-        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-        if (!mailInput.value.match(validRegex)) {
-
-            mailInput.style.borderColor = 'red'
-            errorElement.innerHTML = "Invalid Email";
-            errorElement.classList.add("email-error")
-            insertAfter(errorElement, mailInput);
-
-        } else {
-            document.querySelector('.email-error') && document.querySelector('.email-error').remove();
-        }
-
+function EmptyValue(input) {
+	if (input === "") {
+		let CautionPassword = document.getElementById('CautionPAlert').style.display ="block";
+	}else{
+        let CautionPassword = document.getElementById('CautionPAlert').style.display ="none";
+        return input;
     }
+}
 
+function validateEmail(input) {
+// validate email format
+const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    //password validation function
-    function validatePassword(){
-
-        if (passInput.value.length < 8) {
-
-            passInput.style.borderColor = 'red'
-            errorElement.innerHTML = "Password Has to be  8 or more characters;
-            errorElement.classList.add("pass-error")
-            insertAfter(errorElement, passInput);
-
-        } else {
-            document.querySelector('.pass-error') && document.querySelector('.pass-error').remove();
-        }
-
+  if(input === ""){
+    let CautionEmptyEmail = document.getElementById('CautionEAlert').style.display ="block";
+  }else{
+    let CautionEmptyEmail = document.getElementById('CautionEAlert').style.display ="none";
+	if (emailRegex.test(input)) {
+        let CautionEmail = document.getElementById('CautionAlert').style.display ="none";
+    return input;
+	}else{
+        let CautionEmail = document.getElementById('CautionAlert').style.display ="block";
     }
+   
+}
+  }
+
+	
+const form = document.querySelector("form");
+
+form.addEventListener("submit", function (event) {
+const iEmail = document.getElementById('myInput').value.trim();
+const iPassword = document.getElementById('pwd').value.trim();
+	// stop form submission
+event.preventDefault();
+	// validate the form
+	let PassValid = EmptyValue(iPassword);
+	let emailValid = validateEmail(iEmail);
+console.log(PassValid,emailValid);
+	// if valid, submit the form.
+	if (PassValid && emailValid) {
+		form.submit();
+	}
+    
+});
 
 
-    // end by shera
-
-    // function myFunction() {
-    //     var x = document.getElementById("myInput");
-    //     if (x.type === "passwordinput") {
-    //         x.type = "text";
-    //     } else {
-    //         x.type = "passwordinput";
-    //     }
-    // }
 </script>
 </body>
 </html>
