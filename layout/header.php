@@ -9,6 +9,7 @@ $profileImage= $profile_data["profile_image"];
     
 <head>
 <!-- this section here is blank since this page is loaded to a file that already has those header details -->
+
 </head>
 <body>
     <!-- this code represents the side menu layout -->
@@ -284,7 +285,7 @@ document.write(title);</script>
 <div class="dropdown-menu dropdown-menu-right">
 <a class="dropdown-item" href="#">Dashboard</a>
 <a class="dropdown-item" href="Account-settings.php">Settings</a>
-<a class="dropdown-item" href="login.html">Logout</a>
+<a class="dropdown-item" href="logout.php">Logout</a>
 </div>
 </div>
 
