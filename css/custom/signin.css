@@ -44,6 +44,7 @@ input:hover,
 .fb {
     background-color: #3B5998;
     color: white;
+    /* opacity: 100%; */
 }
 
 .twitter {
@@ -52,7 +53,7 @@ input:hover,
 }
 
 .google {
-    background-color: #dd4b39;
+    background-color: #55ACEE;
     color: white;
 }
 

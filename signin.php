@@ -1,6 +1,7 @@
 <?php
 //initialize the session
 session_start();
+require 'lib/functions.php';
 //google api
 require_once "vendor/autoload.php";
 $clientID = '576932485941-eoaeksl3objol9q6gcnbbcnfvbq9r8mr.apps.googleusercontent.com';
@@ -25,9 +26,9 @@ $email = $google_info->email;
 $name =  $google_info->name;
 $photo = $google_info->picture;
 $location = $google_info->locale;
-var_dump($email,$name,$photo.$location);//gets data ..now to store in db and authenticate
-die();
+glogin_db($email,$name,$photo);
 }else{
+    //creates link url for the google button
     $Googledata = $client->createAuthUrl();
 
 }
@@ -42,7 +43,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     exit;
 }
 //we want to read from our db and verify if the data we receive is true. 
-require 'lib/functions.php';
+
 $date = getdate(); //footer date -will be moved to the footer section.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['emailinput'])) { //if those particular arrays exist then assign the appropriate variables their values.
@@ -114,37 +115,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
 
                         <div class="col">
-                            <a href="#" class="fb btn">
-                                <i class="fa fa-facebook fa-fw"></i> Login with Facebook
-                            </a>
-                            <a href="#" class="twitter btn">
+                            <!-- <a href="#" class="fb btn">
+                             <i class="fa fa-facebook fa-fw"></i> Login with Facebook 
+                            </a> -->
+                            <!-- <a href="#" class="twitter btn">
                                 <i class="fa fa-twitter fa-fw"></i> Login with Twitter
-                            </a>
+                            </a> -->
 
                             <a href="<?php echo $Googledata?>" class="google btn"><i class="fa fa-google fa-fw">
                                 </i> Login with Google
                             </a>
-
-                            <!-- Google api link
-                            <script src="https://accounts.google.com/gsi/client" async defer></script>
-                            <!-- Google Button sign in -->
-                                    <!-- <div id="g_id_onload"
-                                                data-client_id="576932485941-eoaeksl3objol9q6gcnbbcnfvbq9r8mr.apps.googleusercontent.com"
-                                                data-context="signin"
-                                                data-ux_mode="redirect"
-                                                data-login_uri="https://127.0.0.1/login%20module/signin.php"
-                                                data-auto_prompt="false">
-                                    </div> -->
-
-                                        <!-- <div class="g_id_signin"
-                                            data-type="standard"
-                                            data-shape="pill"
-                                            data-theme="filled_black"
-                                            data-text="signin_with"
-                                            data-size="large"
-                                            data-logo_alignment="left"
-                                            data-width="458">
-                                        </div> --> 
                             
                         </div>
 
@@ -202,12 +182,13 @@ let alertclose = document.getElementById("closebtn").addEventListener("click", f
     let opsAlert = document.getElementById('OopsAlert').style.display ="none";
 }); 
 let currentLocation = window.location.href;
-    let urlLocation = currentLocation.slice(45);
+    let urlLocation = currentLocation.slice(44);
     if( urlLocation == 'Invalid%20email%20or%20password.'){
         let opsAlert = document.getElementById('OopsAlert').style.display ="block";
         console.log(urlLocation+'good');
     }else{
         let opsAlert = document.getElementById('OopsAlert').style.display ="none";
+        console.log(urlLocation+'noma');
     }
 
 

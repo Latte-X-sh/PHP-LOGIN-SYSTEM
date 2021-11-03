@@ -277,20 +277,75 @@ function login_db($emil, $pwd)
                 $_SESSION["email"] = $email;
                 header('location:/login module/index.php');
             } else {
-             $login_err = "Invalid email or password.";
+             $login_err = "Invalid%20email%20or%20password.";
              header('location:/login module/signin.php?1'.$login_err);
             }
         } else {
-            $login_err = "Invalid email or password.";
+            $login_err = "Invalid%20email%20or%20password..";
             header('location:/login module/signin.php?2'.$login_err);
         }
     } else {
-        $login_err = "Invalid email or password.";
+        $login_err = "Invalid%20email%20or%20password.";
         header('location:/login module/signin.php?3'.$login_err);//if the statement return a number not 1(true) then display this error message.
     }
     // Close statement
     unset($stmt);
     unset($pdo);
+}
+// login flow for google sign in process
+function glogin_newacc($email,$username,$profilepic){
+    $pdo = get_connection();
+//create a new account
+$query = "INSERT into `users` ( `profile_image`,`name`, `email` ) VALUES (:profile,:name, :email)";
+$stmt = $pdo->prepare($query);
+$stmt->bindParam(":name", $username);
+$stmt->bindParam(":email", $email);
+$stmt->bindParam(":profile", $profilepic);
+$result = $stmt->execute(array(
+    ':name' => $username,
+    ':email' => $email,
+    ':profile' => $profilepic,
+
+));
+}
+function glogin_db($email,$username,$profilepic){
+    $datatesting = [];
+    $pdo = get_connection();
+    //we want to check if the email match
+    $query = "SELECT * FROM `users` WHERE email= :email ";
+    $stmt = $pdo->prepare($query);
+    $result = $stmt->execute(array(
+        ':email' => $email
+    ));
+    $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($stmt->rowCount() == 1) {
+        array_push($datatesting ,'Existing user');
+        if ($userRow) {
+            $id = $userRow["id"];
+            $email = $userRow["email"];
+            $name = $userRow["name"];
+            $password = $userRow["password"];
+            $email = $userRow["email"];
+            // var_dump($profilepic);
+            // die();
+            // session_start();
+            $_SESSION["loggedin"] = true;
+            $_SESSION["id"] = $id; //random number
+            $_SESSION["name"] = $name;
+            $_SESSION["email"] = $email;
+            if($userRow["profile_image"] == 'assets/img/user.jpg'){
+                account_image_processing($profilepic);
+            }
+            $_SESSION['login_status'] = 'Authenticated with Google Successfully';
+            header('location:/login module/index.php');
+        }
+}else{
+    array_push($datatesting ,'New user');
+    glogin_newacc($email,$username,$profilepic);
+    glogin_db($email,$username,$profilepic);
+
+}
+
 }
 
 
@@ -370,6 +425,28 @@ function handle_audio($mixTitle,$mixFile,$uid){
 
 }
 function account_image_processing($imageData){
+   
+    if(gettype($imageData == "string")){
+        // var_dump($imageData);
+        // die();
+        $emailGoogle = $_SESSION['email'];
+        $pdo = get_connection();
+                
+                $query ="UPDATE `users` 
+                              SET profile_image = CASE  
+                                WHEN :profile_image is NULL THEN users.profile_image
+                                WHEN :profile_image='' THEN users.profile_image 
+                                ELSE :profile_image
+                                END  
+                            WHERE email = :email ";
+                $stmt = $pdo->prepare($query);  
+                $stmt->bindParam(':profile_image',$imageData);
+                $stmt->bindParam(':email', $emailGoogle);
+                $result = $stmt->execute(array(
+                    ':profile_image' => $imageData ,
+                    ':email' => $emailGoogle
+                ));
+    }else{
         $iduser = $_SESSION['id'];
         $imageName= md5($imageData['name']);
         $imageType= $imageData['type'];
@@ -405,6 +482,9 @@ function account_image_processing($imageData){
             }
         
         } 
+   
+    }
+    
 }
 function mix_feed(){
     $pdo = get_connection();
