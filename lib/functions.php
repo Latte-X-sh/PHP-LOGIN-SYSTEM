@@ -336,7 +336,7 @@ function glogin_db($email,$username,$profilepic){
             if($userRow["profile_image"] == 'assets/img/user.jpg'){
                 account_image_processing($profilepic);
             }
-            $_SESSION['login_status'] = 'Authenticated with Google Successfully';
+            $_SESSION["login_status"] = 'Authenticated with Google Successfully';
             header('location:/login module/index.php');
         }
 }else{

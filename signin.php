@@ -16,6 +16,8 @@ $client->addScope('profile');
 $client->addScope('email');
 
 if(isset($_GET['code'])){
+    // var_dump($_GET['code']);
+    // die();
 
 $token= $client->fetchAccessTokenWithAuthCode($_GET['code']);
 $client->setAccessToken($token);

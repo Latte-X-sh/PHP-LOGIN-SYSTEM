@@ -6,9 +6,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   header("location: signin.php");
   exit;
 }
-$loginStatus = $_SESSION['login_status'];
-// var_dump();
-// die();
+//
+$googleLoginStatus = '';
+if(isset($_SESSION["login_status"])){
+  $googleLoginStatus = $_SESSION["login_status"];
+}
 $mixes= mix_feed(0); //gets all the mixes
 $mixes = array_reverse($mixes);
 // $json = json_encode($mixes , JSON_PRETTY_PRINT);
@@ -63,16 +65,13 @@ $mixes = array_reverse($mixes);
 
 <div class="page-wrapper">
 <div class="container ">
-<br>
-<div class="container">
+  <br>
 <div class="alert alert-success alert-dismissible fade show" role="alert" id="SuccessAlert">
                 <strong>Success!</strong> Successful Authentication with Google.
                      <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="closebtn">
                       <span aria-hidden="true">&times;</span>
                 </button>
 </div>
-</div>
-  <br>
   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -258,27 +257,28 @@ $mixes = array_reverse($mixes);
 
 </div>
 <script type ='text/javascript'>
-let SuccesAlertGoogle = document.getElementById('SuccessAlert').style.display="none";
-let loginStatusData = "<?= $loginStatus ?>";
-// let alertclose = document.getElementById("closebtn").addEventListener("click", function (){
-//     let opsAlert = document.getElementById('SuccessAlert').style.display ="none";
-// }); 
-if(loginStatusData == "Authenticated with Google Successfully"){
+let AlertGoogle = document.getElementById('SuccessAlert').style.display = 'none';
+// if(let x = "")
+let loginStatusData = '<?=$googleLoginStatus?>';
+if(loginStatusData !== ''){
   let SuccesAlertGoogle = document.getElementById('SuccessAlert').style.display="block";
-  SuccessAlertGoogle.delay(4000)  
-  let SuccesAlertGoogle = document.getElementById('SuccessAlert').style.display="none"; 
-  // console.log('tuko sawa');
+  setTimeout(() => {
+    let SuccesAlertGoogle = document.getElementById('SuccessAlert').style.display="none";
+  }, 10000);
+}else{
+  console.log(loginStatusData);
 }
+
+
   </script>
 
-<script src="./assets/js/jquery-3.5.1.min.js"></script>
+<script src="assets/js/jquery-3.5.1.min.js"></script>
 
-<script src="./assets/js/popper.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
 
-<script src="./assets/js/jquery.slimscroll.min.js"></script>
+<script src="assets/js/jquery.slimscroll.min.js"></script>
 
-<script src="./assets/js/app.js"></script>
-
+<script src="assets/js/app.js"></script>
 </body>
 </html>
