@@ -1,6 +1,41 @@
 <?php
 //initialize the session
 session_start();
+//google api
+require_once "vendor/autoload.php";
+$clientID = '576932485941-eoaeksl3objol9q6gcnbbcnfvbq9r8mr.apps.googleusercontent.com';
+$clientSecret ='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';
+$redirectUrl ="http://localhost/login%20module/signin.php";
+//create a client request to google
+$client = new Google_Client();
+$client->setClientId($clientID);
+$client->setClientSecret($clientSecret);
+$client->setRedirectUri($redirectUrl);
+$client->addScope('profile');
+$client->addScope('email');
+
+if(isset($_GET['code'])){
+
+$token= $client->fetchAccessTokenWithAuthCode($_GET['code']);
+$client->setAccessToken($token);
+//new user data getting
+$gauth = new Google_Service_Oauth2($client);
+$google_info = $gauth->userinfo->get();
+$email = $google_info->email;
+$name =  $google_info->name;
+$photo = $google_info->picture;
+$location = $google_info->locale;
+var_dump($email,$name,$photo.$location);//gets data ..now to store in db and authenticate
+die();
+}else{
+    $Googledata = $client->createAuthUrl();
+
+}
+
+
+
+
+
 //checked if the user is already logged in and if so redirect
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     header('location:index.php');
@@ -52,6 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="./css/custom/signin.css" rel="stylesheet">
 
 
+
+
 </head>
 <body>
 <br/>
@@ -83,9 +120,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <a href="#" class="twitter btn">
                                 <i class="fa fa-twitter fa-fw"></i> Login with Twitter
                             </a>
-                            <a href="#" class="google btn"><i class="fa fa-google fa-fw">
-                                </i> Login with Google+
+
+                            <a href="<?php echo $Googledata?>" class="google btn"><i class="fa fa-google fa-fw">
+                                </i> Login with Google
                             </a>
+
+                            <!-- Google api link
+                            <script src="https://accounts.google.com/gsi/client" async defer></script>
+                            <!-- Google Button sign in -->
+                                    <!-- <div id="g_id_onload"
+                                                data-client_id="576932485941-eoaeksl3objol9q6gcnbbcnfvbq9r8mr.apps.googleusercontent.com"
+                                                data-context="signin"
+                                                data-ux_mode="redirect"
+                                                data-login_uri="https://127.0.0.1/login%20module/signin.php"
+                                                data-auto_prompt="false">
+                                    </div> -->
+
+                                        <!-- <div class="g_id_signin"
+                                            data-type="standard"
+                                            data-shape="pill"
+                                            data-theme="filled_black"
+                                            data-text="signin_with"
+                                            data-size="large"
+                                            data-logo_alignment="left"
+                                            data-width="458">
+                                        </div> --> 
+                            
                         </div>
 
                         <div class="col">

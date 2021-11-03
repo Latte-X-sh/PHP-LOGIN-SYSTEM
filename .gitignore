@@ -5,3 +5,6 @@
 # *.jpg
 *.log
 **/bootstrap-5.0.2-examples 
+**/vendor
+**composer.json
+composer.lock
