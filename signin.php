@@ -184,14 +184,24 @@ let alertclose = document.getElementById("closebtn").addEventListener("click", f
     let opsAlert = document.getElementById('OopsAlert').style.display ="none";
 }); 
 let currentLocation = window.location.href;
-    let urlLocation = currentLocation.slice(44);
-    if( urlLocation == 'Invalid%20email%20or%20password.'){
+    
+    for(let x = 0 ; x<= currentLocation.length ; x++){
+        if(currentLocation[x] == '?'){
+        console.log(currentLocation[x]);
         let opsAlert = document.getElementById('OopsAlert').style.display ="block";
-        console.log(urlLocation+'good');
-    }else{
-        let opsAlert = document.getElementById('OopsAlert').style.display ="none";
-        console.log(urlLocation+'noma');
+        break;  
+        }else{
+            let opsAlert = document.getElementById('OopsAlert').style.display ="none";    
+        }
     }
+    // let urlLocation = currentLocation.slice(44);
+    // if( urlLocation == 'Invalid%20email%20or%20password.'){
+    //     let opsAlert = document.getElementById('OopsAlert').style.display ="block";
+    //     console.log(urlLocation+'good');
+    // }else{
+    //     let opsAlert = document.getElementById('OopsAlert').style.display ="none";
+    //     console.log(urlLocation+'noma');
+    // }
 
 
 
