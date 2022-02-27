@@ -81,7 +81,7 @@ function fetch_user_email($userEmail)
            $siteurl = 'http://localhost/login module/';
            $passwordurl = 'http://localhost/login module/otp.php';
            $sitename = 'Indigo Regime'; 
-           $mailservice = 'indigoregimegroupmail@gmail.com';
+           $mailservice = '#';//your email
            $compTel = '+254796919703';
            $message = file_get_contents('emailtemp.php'); 
            //replace content of the message variable
@@ -99,7 +99,7 @@ function fetch_user_email($userEmail)
            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS ; // Enable TLS encryption, 'ssl' also accepted
            $mail->Port       = 587;                // TCP port to connect to.
            $mail->Username = $mailservice; // YOUR gmail email
-           $mail->Password = 'Dev@23Work#!zabeMimo'; // YOUR gmail password
+           $mail->Password = '#'; // YOUR gmail password
            //Sender and recipient settings
            $mail->setFrom($mailservice, 'Indigo Music');
            $mail->addAddress( $userEmail); // $userEmail
