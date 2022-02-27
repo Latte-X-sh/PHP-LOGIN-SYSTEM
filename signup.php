@@ -249,7 +249,7 @@ input[type=submit]:hover {
 
 <div class="container">
 <div class="container-my">
-  <form method="POST" action="signup-2.php">
+  <form method="POST" action="signup.php">
     <div class="row-my">
       <h2 style="text-align:center">Enter your Details</h2>
       <!-- <div class="vl">

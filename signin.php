@@ -164,10 +164,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="bottom-container">
                 <div class="row-my">
                     <div class="col">
-                        <a href="signup-2.php" style="color:white" class="btn">Sign up</a>
+                        <a href="signup.php" style="color:white" class="btn">Sign up</a>
                     </div>
                     <div class="col">
-                        <a href="#" style="color:white" class="btn">Forgot password?</a>
+                        <a href="forgotpassword.php" style="color:white" class="btn">Forgot password?</a>
                     </div>
                 </div>
             </div>
@@ -177,6 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <script type="text/javascript">
+
 let CautionEmail = document.getElementById('CautionAlert').style.display ="none";
 let CautionEmptyEmail = document.getElementById('CautionEAlert').style.display ="none";
 let CautionPassword = document.getElementById('CautionPAlert').style.display ="none";
@@ -187,7 +188,7 @@ let currentLocation = window.location.href;
     
     for(let x = 0 ; x<= currentLocation.length ; x++){
         if(currentLocation[x] == '?'){
-        console.log(currentLocation[x]);
+        // console.log(currentLocation[x]);
         let opsAlert = document.getElementById('OopsAlert').style.display ="block";
         break;  
         }else{

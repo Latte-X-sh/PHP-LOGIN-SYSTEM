@@ -1,4 +1,14 @@
 <?php
+define('__ROOT__', dirname(dirname(__FILE__))); 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+require_once (__ROOT__ .'. /vendor/phpmailer/phpmailer/src/Exception.php');
+require_once  (__ROOT__ .'./vendor/phpmailer/phpmailer/src/PHPMailer.php');
+require_once  (__ROOT__ .'./vendor/phpmailer/phpmailer/src/SMTP.php');
+require_once  (__ROOT__ .'./vendor/autoload.php');
+
+
 //function that connects my web page and the database
 function get_connection()
 {
@@ -43,6 +53,72 @@ function fetch_dbEmail()
     $userEmails = $results->fetchAll();
     return $userEmails;
 
+}
+function fetch_user_email($userEmail)
+{ //works well(fetches username data from the db)
+    $pdo = get_connection();
+    // var_dump($pdo); die();
+    $query = "SELECT `email`,`name` FROM users where email = :email"  ;
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":email", $userEmail);
+    $result = $stmt->execute(array(
+        ':email' => $userEmail,
+    ));
+    $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($stmt->rowCount() == 1){
+        //means the email exists
+        //echo $userRow['email'];
+        //echo $userRow['name'];
+        session_start();
+        
+        //generate random otp of 6 figures
+        $randomSix = mt_rand(100000,999999);
+           //code..
+        $_SESSION['content'] = true;
+        $_SESSION['email'] = $userRow['email'];
+       
+           //global mail class
+           $siteurl = 'http://localhost/login module/';
+           $passwordurl = 'http://localhost/login module/otp.php';
+           $sitename = 'Indigo Regime'; 
+           $mailservice = 'indigoregimegroupmail@gmail.com';
+           $compTel = '+254796919703';
+           $message = file_get_contents('emailtemp.php'); 
+           //replace content of the message variable
+           $message = str_replace('${site-name}', $sitename, $message); 
+           $message = str_replace('${site-url}', $siteurl, $message);
+           $message = str_replace('${reset-password-url}', $passwordurl, $message);
+           $message = str_replace('${customer-service-email}', $mailservice, $message);
+           $message = str_replace('${site-toll-free-number}', $compTel, $message);
+           $message = str_replace('${OTP-CODE}', $randomSix, $message);
+           $mail = new PHPMailer();
+           $mail->SMTPDebug = 0;                   // Enable verbose debug output
+           $mail->isSMTP();                        // Set mailer to use SMTP
+           $mail->Host       = 'smtp.gmail.com';    // Specify main SMTP server
+           $mail->SMTPAuth   = true;               // Enable SMTP authentication
+           $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS ; // Enable TLS encryption, 'ssl' also accepted
+           $mail->Port       = 587;                // TCP port to connect to.
+           $mail->Username = $mailservice; // YOUR gmail email
+           $mail->Password = 'Dev@23Work#!zabeMimo'; // YOUR gmail password
+           //Sender and recipient settings
+           $mail->setFrom($mailservice, 'Indigo Music');
+           $mail->addAddress( $userEmail); // $userEmail
+           $mail->MsgHTML($message);
+           $mail->IsHTML(true);
+           $mail->CharSet="utf-8";
+           $mail->Subject = "Forgot your password?We can help.";
+           $mail->send();
+           $_SESSION['otp'] = $randomSix;
+           header('Location:otp.php');
+           
+        // echo "Error in sending email. Mailer Error: {$mail->ErrorInfo}";
+           
+    }else{
+        echo 'no email like that'.$userRow['email'];
+        header('Location:signin.php');
+    }
+
+    // header('Location:signup.php');
 }
 
 
@@ -275,18 +351,18 @@ function login_db($emil, $pwd)
                 $_SESSION["id"] = $id; //random number
                 $_SESSION["name"] = $name;
                 $_SESSION["email"] = $email;
-                header('location:/login module/index.php');
+                header('location:./index.php');
             } else {
              $login_err = "Invalid%20email%20or%20password.";
-             header('location:/login module/signin.php?1'.$login_err);
+             header('location:./signin.php?1'.$login_err);
             }
         } else {
             $login_err = "Invalid%20email%20or%20password..";
-            header('location:/login module/signin.php?2'.$login_err);
+            header('location:./signin.php?2'.$login_err);
         }
     } else {
         $login_err = "Invalid%20email%20or%20password.";
-        header('location:/login module/signin.php?3'.$login_err);//if the statement return a number not 1(true) then display this error message.
+        header('location:./signin.php?3'.$login_err);//if the statement return a number not 1(true) then display this error message.
     }
     // Close statement
     unset($stmt);
@@ -337,7 +413,7 @@ function glogin_db($email,$username,$profilepic){
                 account_image_processing($profilepic);
             }
             $_SESSION["login_status"] = 'Authenticated with Google Successfully';
-            header('location:/login module/index.php');
+            header('location:./index.php');
         }
 }else{
     array_push($datatesting ,'New user');
@@ -420,7 +496,7 @@ function handle_audio($mixTitle,$mixFile,$uid){
 
 
 
-    header("Location:mix_upload.php?message=$message");
+    header("Location:./mix_upload.php?message=$message");
 
 
 }
